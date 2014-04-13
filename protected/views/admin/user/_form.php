@@ -36,6 +36,12 @@
 		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'email'); ?>
 	</div>
+    
+    <div class="row">
+		<?php echo $form->labelEx($model,'active'); ?>
+		<?php echo $form->checkBox($model,'active',array('size'=>1,'maxlength'=>1)); ?>
+		<?php echo $form->error($model,'active'); ?>
+	</div> 
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>

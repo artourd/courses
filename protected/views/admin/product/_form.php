@@ -20,6 +20,12 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'alias'); ?>
+		<?php echo $form->textField($model,'alias',array('size'=>50,'maxlength'=>50)); ?>
+		<?php echo $form->error($model,'alias'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'title'); ?>
 		<?php echo $form->textField($model,'title',array('size'=>50,'maxlength'=>50)); ?>
 		<?php echo $form->error($model,'title'); ?>
@@ -27,9 +33,15 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'scope_id'); ?>
-		<?php echo $form->textField($model,'scope_id'); ?>
+		<?php echo $form->dropDownList($model,'scope_id', $scopes); ?>
 		<?php echo $form->error($model,'scope_id'); ?>
 	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'active'); ?>
+		<?php echo $form->checkBox($model,'active',array('size'=>1,'maxlength'=>1)); ?>
+		<?php echo $form->error($model,'active'); ?>
+	</div> 
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>

@@ -48,8 +48,15 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'id',
 		'course_id',
 		'link',
+		'alias',
 		'title',
 		'desc',
+		'created',
+		'updated',
+        'active',        
+		/*
+		'created',
+		*/
 		array(
 			'class'=>'CButtonColumn',
 		),

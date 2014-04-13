@@ -27,5 +27,8 @@ $this->menu=array(
 		'width',
 		'link',
 		'alt',
+		'created',
+		'updated',
+        'active',        
 	),
 )); ?>

@@ -48,6 +48,12 @@
 		<?php echo $form->textField($model,'alt',array('size'=>50,'maxlength'=>50)); ?>
 		<?php echo $form->error($model,'alt'); ?>
 	</div>
+    
+	<div class="row">
+		<?php echo $form->labelEx($model,'active'); ?>
+		<?php echo $form->checkBox($model,'active',array('size'=>1,'maxlength'=>1)); ?>
+		<?php echo $form->error($model,'active'); ?>
+	</div>     
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>

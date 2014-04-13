@@ -50,6 +50,9 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'title',
 		'keyword',
 		'desc',
+		'created',
+		'updated',
+        'active',        
 		array(
 			'class'=>'CButtonColumn',
 		),

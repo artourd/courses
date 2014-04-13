@@ -26,5 +26,8 @@ $this->menu=array(
 		'title',
 		'keyword',
 		'desc',
+		'created',
+		'updated',
+        'active',        
 	),
 )); ?>

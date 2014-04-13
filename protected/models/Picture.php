@@ -32,6 +32,9 @@ class Picture extends CActiveRecord
 			array('id, height, width', 'numerical', 'integerOnly'=>true),
 			array('type', 'length', 'max'=>7),
 			array('link, alt', 'length', 'max'=>50),
+            array('created', 'length', 'max'=>20),
+            array('updated', 'length', 'max'=>20),
+            array('active', 'numerical', 'integerOnly'=>true),            
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, type, height, width, link, alt', 'safe', 'on'=>'search'),
@@ -61,6 +64,9 @@ class Picture extends CActiveRecord
 			'width' => 'Width',
 			'link' => 'Link',
 			'alt' => 'Alt',
+            'created' => 'Created',
+            'updated' => 'Updated',
+            'active' => 'Active',            
 		);
 	}
 
@@ -88,6 +94,9 @@ class Picture extends CActiveRecord
 		$criteria->compare('width',$this->width);
 		$criteria->compare('link',$this->link,true);
 		$criteria->compare('alt',$this->alt,true);
+        $criteria->compare('created',$this->created,true);
+        $criteria->compare('updated',$this->updated,true);
+        $criteria->compare('active',$this->active,true);        
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

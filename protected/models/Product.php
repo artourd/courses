@@ -27,10 +27,14 @@ class Product extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('id, scope_id', 'numerical', 'integerOnly'=>true),
+            array('alias', 'length', 'max'=>50),
 			array('title', 'length', 'max'=>50),
+            array('created', 'length', 'max'=>20),
+            array('updated', 'length', 'max'=>20),
+            array('active', 'numerical', 'integerOnly'=>true),            
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, scope_id', 'safe', 'on'=>'search'),
+			array('id, title, alias, scope_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -41,9 +45,10 @@ class Product extends CActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		return array(
-		);
-	}
+        return array(
+            'scope'=>array(self::HAS_ONE, 'Scope', 'scope_id'),
+        );
+    }
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -53,7 +58,11 @@ class Product extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'title' => 'Title',
+            'alias' => 'alias',
 			'scope_id' => 'Scope',
+            'created' => 'Created',
+            'updated' => 'Updated',
+            'active' => 'Active',            
 		);
 	}
 
@@ -78,7 +87,11 @@ class Product extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('scope_id',$this->scope_id);
-
+        $criteria->compare('alias',$this->alias,true);
+        $criteria->compare('created',$this->created,true);
+        $criteria->compare('updated',$this->updated,true);
+        $criteria->compare('active',$this->active,true);
+        
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
@@ -94,4 +107,14 @@ class Product extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+    
+    protected function beforeSave()
+    {
+        if (empty($this->created)){
+          $this->created = date('Y-m-d H:i:s');
+        }
+        $this->updated = date('Y-m-d H:i:s');
+        
+        return parent::beforeSave();
+    }    
 }

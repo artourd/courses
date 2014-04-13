@@ -52,7 +52,7 @@ class ProductController extends Controller
 	public function actionView($id)
 	{
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$this->loadModel($id)->with('scope'),
 		));
 	}
 
@@ -63,6 +63,13 @@ class ProductController extends Controller
 	public function actionCreate()
 	{
 		$model=new Product;
+        $scopesObjects = Scope::model()->findAll('active=1');
+        
+        $scopes = array();
+        foreach ($scopesObjects as $obj){
+          $scopes[$obj->id] = $obj->title;
+        }
+        
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -76,6 +83,7 @@ class ProductController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
+            'scopes'=>$scopes,
 		));
 	}
 
@@ -87,6 +95,12 @@ class ProductController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+        $scopesObjects = Scope::model()->findAll('active=1');
+        
+        $scopes = array();
+        foreach ($scopesObjects as $obj){
+          $scopes[$obj->id] = $obj->title;
+        }
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -100,6 +114,7 @@ class ProductController extends Controller
 
 		$this->render('update',array(
 			'model'=>$model,
+            'scopes'=>$scopes,
 		));
 	}
 

@@ -22,7 +22,11 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
+		'alias',
 		'title',
 		'scope_id',
+		'created',
+		'updated',
+        'active',
 	),
 )); ?>

@@ -26,10 +26,14 @@ class Scope extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('id', 'numerical', 'integerOnly'=>true),
+            array('alias', 'length', 'max'=>50),
 			array('title', 'length', 'max'=>50),
+            array('created', 'length', 'max'=>20),
+            array('updated', 'length', 'max'=>20),
+            array('active', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title', 'safe', 'on'=>'search'),
+			array('id, title, alias, created, updated, active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,6 +56,10 @@ class Scope extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'title' => 'Title',
+            'alias' => 'Alias',
+            'created' => 'Created',
+            'updated' => 'Updated',
+            'active' => 'Active',
 		);
 	}
 
@@ -75,7 +83,11 @@ class Scope extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('title',$this->title,true);
-
+        $criteria->compare('alias',$this->alias,true);
+        $criteria->compare('created',$this->created,true);
+        $criteria->compare('updated',$this->updated,true);
+        $criteria->compare('active',$this->active,true);
+        
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
@@ -91,4 +103,18 @@ class Scope extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+    
+    
+
+    protected function beforeSave()
+    {
+        if (empty($this->created)){
+          $this->created = date('Y-m-d H:i:s');
+        }
+        $this->updated = date('Y-m-d H:i:s');
+        
+        return parent::beforeSave();
+    }
+
+
 }

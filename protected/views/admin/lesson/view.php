@@ -24,7 +24,11 @@ $this->menu=array(
 		'id',
 		'course_id',
 		'link',
+		'alias',
 		'title',
 		'desc',
+		'created',
+		'updated',
+        'active',
 	),
 )); ?>

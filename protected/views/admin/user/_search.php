@@ -26,6 +26,21 @@
 		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128)); ?>
 	</div>
 
+  	<div class="row">
+		<?php echo $form->label($model,'created'); ?>
+		<?php echo $form->textField($model,'created'); ?>
+	</div>
+  
+	<div class="row">
+		<?php echo $form->label($model,'updated'); ?>
+		<?php echo $form->textField($model,'updated'); ?>
+	</div>
+  
+	<div class="row">
+		<?php echo $form->label($model,'active'); ?>
+		<?php echo $form->textField($model,'active'); ?>
+	</div> 
+  
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>
