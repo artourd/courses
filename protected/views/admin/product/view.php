@@ -24,7 +24,7 @@ $this->menu=array(
 		'id',
 		'alias',
 		'title',
-		'scope_id',
+		'scope.title',
 		'created',
 		'updated',
         'active',

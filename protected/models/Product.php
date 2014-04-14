@@ -46,7 +46,7 @@ class Product extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
         return array(
-            'scope'=>array(self::HAS_ONE, 'Scope', 'scope_id'),
+            'scope'=>array(self::BELONGS_TO, 'Scope', 'scope_id'),
         );
     }
 

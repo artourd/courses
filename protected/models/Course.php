@@ -46,6 +46,7 @@ class Course extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'product'=>array(self::BELONGS_TO, 'Product', 'product_id'),
 		);
 	}
 
@@ -106,4 +107,14 @@ class Course extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+    
+    protected function beforeSave()
+    {
+        if (empty($this->created)){
+          $this->created = date('Y-m-d H:i:s');
+        }
+        $this->updated = date('Y-m-d H:i:s');
+        
+        return parent::beforeSave();
+    }      
 }

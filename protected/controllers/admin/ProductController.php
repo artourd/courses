@@ -52,7 +52,7 @@ class ProductController extends Controller
 	public function actionView($id)
 	{
 		$this->render('view',array(
-			'model'=>$this->loadModel($id)->with('scope'),
+			'model'=>$this->loadModel($id),
 		));
 	}
 
@@ -167,7 +167,7 @@ class ProductController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Product::model()->findByPk($id);
+		$model=Product::model()->with('scope')->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;

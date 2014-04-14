@@ -17,8 +17,8 @@
 	<?php echo CHtml::encode($data->title); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('scope_id')); ?>:</b>
-	<?php echo CHtml::encode($data->scope_id); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('scope')); ?>:</b>
+	<?php echo CHtml::encode($data->scope->title); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('created')); ?>:</b>
