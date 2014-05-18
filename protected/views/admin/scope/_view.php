@@ -4,7 +4,6 @@
 ?>
 
 <div class="view">
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
 	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
 	<br />
@@ -28,5 +27,15 @@
     <b><?php echo CHtml::encode($data->getAttributeLabel('active')); ?>:</b>
 	<?php echo CHtml::encode($data->active); ?>
 	<br /> 
+    
+    <b><?php echo CHtml::encode($data->getAttributeLabel('picture')); ?>:</b>
+	<?php echo CHtml::encode($data->picture); ?>
+    <?=  Picture::getImage('scope', $data->id, 'pic', $data->picture);?>
+	<br /> 
+    
+    <b><?php echo CHtml::encode($data->getAttributeLabel('thumb')); ?>:</b>
+	<?php echo CHtml::encode($data->thumb); ?>
+    <?=  Picture::getImage('scope', $data->id, 'thumb', $data->thumb);?>
+	<br />     
 
 </div>

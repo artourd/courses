@@ -17,8 +17,8 @@
 	<?php echo CHtml::encode($data->title); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('product_id')); ?>:</b>
-	<?php echo CHtml::encode($data->product_id); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('product')); ?>:</b>
+	<?php echo CHtml::encode($data->product->title); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('created')); ?>:</b>

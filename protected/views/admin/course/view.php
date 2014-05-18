@@ -24,7 +24,7 @@ $this->menu=array(
 		'id',
 		'alias',
 		'title',
-		'product_id',
+		'product.title',
 		'created',
 		'updated',
         'active',

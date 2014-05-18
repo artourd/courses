@@ -48,7 +48,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'id',
 		'alias',
 		'title',
-		'product_id',
+		'product.title',
 		'created',
 		'updated',
         'active',

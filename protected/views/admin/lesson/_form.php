@@ -21,7 +21,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'course_id'); ?>
-		<?php echo $form->textField($model,'course_id'); ?>
+		<?php echo $form->dropDownList($model,'course_id', $courses); ?>
 		<?php echo $form->error($model,'course_id'); ?>
 	</div>
 

@@ -38,9 +38,15 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'link'); ?>
-		<?php echo $form->textField($model,'link',array('size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'link'); ?>
+		<?php /*echo $form->labelEx($model,'link'); ?>
+		<?php echo $form->fileField($model,'link',array('size'=>50,'maxlength'=>50)); ?>
+		<?php echo $form->error($model,'link'); */?>
+        <?php $this->widget('xupload.XUpload', array(
+                            'url' => Yii::app()->createUrl("site/upload"),
+                            'model' => $model,
+                            'attribute' => 'file',
+                            'multiple' => true,
+        )); ?>      
 	</div>
 
 	<div class="row">
