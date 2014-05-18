@@ -63,7 +63,13 @@ class LessonController extends Controller
 	public function actionCreate()
 	{
 		$model=new Lesson;
-
+        $coursesObjects = Course::model()->findAll();
+        
+        $courses = array();
+        foreach ($coursesObjects as $obj){
+          $courses[$obj->id] = $obj->title;
+        }
+        
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -76,6 +82,7 @@ class LessonController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
+            'courses'=>$courses
 		));
 	}
 
@@ -87,7 +94,12 @@ class LessonController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+        $coursesObjects = Course::model()->findAll();
+        
+        $courses = array();
+        foreach ($coursesObjects as $obj){
+          $courses[$obj->id] = $obj->title;
+        }
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -100,6 +112,7 @@ class LessonController extends Controller
 
 		$this->render('update',array(
 			'model'=>$model,
+            'courses'=>$courses
 		));
 	}
 
@@ -152,7 +165,7 @@ class LessonController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Lesson::model()->findByPk($id);
+		$model=Lesson::model()->with('course')->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;

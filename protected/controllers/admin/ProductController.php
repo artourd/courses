@@ -63,13 +63,12 @@ class ProductController extends Controller
 	public function actionCreate()
 	{
 		$model=new Product;
-        $scopesObjects = Scope::model()->findAll('active=1');
+        $scopesObjects = Scope::model()->findAll();
         
         $scopes = array();
         foreach ($scopesObjects as $obj){
           $scopes[$obj->id] = $obj->title;
-        }
-        
+        }        
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);

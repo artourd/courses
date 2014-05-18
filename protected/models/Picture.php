@@ -29,7 +29,7 @@ class Picture extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, height, width', 'numerical', 'integerOnly'=>true),
+			array('id, height, width, object_id', 'numerical', 'integerOnly'=>true),
 			array('type', 'length', 'max'=>7),
 			array('link, alt', 'length', 'max'=>50),
             array('created', 'length', 'max'=>20),
@@ -59,6 +59,7 @@ class Picture extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+            'object_id' => 'Object',
 			'type' => 'Type',
 			'height' => 'Height',
 			'width' => 'Width',
@@ -89,6 +90,7 @@ class Picture extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
+        $criteria->compare('object_id',$this->object_id);
 		$criteria->compare('type',$this->type,true);
 		$criteria->compare('height',$this->height);
 		$criteria->compare('width',$this->width);
@@ -122,5 +124,5 @@ class Picture extends CActiveRecord
         $this->updated = date('Y-m-d H:i:s');
         
         return parent::beforeSave();
-    }      
+    }
 }

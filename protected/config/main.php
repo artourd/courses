@@ -17,7 +17,11 @@ return array(
 		'application.models.*',
 		'application.components.*',
 	),
-
+    
+    'aliases' => array(
+        'xupload' => 'ext.xupload'
+    ),
+    
 	'modules'=>array(
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
@@ -77,6 +81,15 @@ return array(
 				*/
 			),
 		),
+        
+        'clientScript'=>array(
+            'packages'=>array(
+                'admin'=>array(
+                    'baseUrl'=>'/yii/courses/js/',
+                    'js'=>array('admin.js'),
+                )
+            ),
+        ),        
 	),
 
 	// application-level parameters that can be accessed

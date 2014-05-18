@@ -169,5 +169,5 @@ class PictureController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
-	}
+	}  
 }
