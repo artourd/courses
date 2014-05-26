@@ -38,8 +38,8 @@
 		<?php echo $form->labelEx($model,'picture'); ?>
 		<?php echo $form->fileField($model,'picture',array('size'=>50,'maxlength'=>50, 'class'=>($model->picture ? 'none': '') )); ?>
 		<?php echo $form->error($model,'picture'); ?>
-        <?=  Picture::getImage('scope', $model->id, 'picture', $model->picture)?>
-        <?= $model->picture ? Picture::getCross('pic') : ''; ?>
+        <?=  Picture::getImage('scope', $model->id, 'pic', $model->picture)?>
+        <?= $model->picture ? Picture::getCross('pic', get_class($model)) : ''; ?>
 	</div>
     
 	<div class="row">
@@ -47,7 +47,7 @@
 		<?php echo $form->fileField($model,'thumb',array('size'=>50,'maxlength'=>50, 'class'=>($model->thumb ? 'none': ''))); ?>
 		<?php echo $form->error($model,'thumb'); ?>
         <?=  Picture::getImage('scope', $model->id, 'thumb', $model->thumb);?>
-        <?= $model->thumb ? Picture::getCross('thumb', 'Scope') : ''; ?>
+        <?= $model->thumb ? Picture::getCross('thumb', get_class($model)) : ''; ?>
 	</div>
 
 	<div class="row buttons">

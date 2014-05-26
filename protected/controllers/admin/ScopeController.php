@@ -27,7 +27,7 @@ class ScopeController extends Controller {
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
                 'actions' => array('index', 'view'),
-                'users' => array('*'),
+                'users' => array('@'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array('create', 'update'),
@@ -64,8 +64,13 @@ class ScopeController extends Controller {
         // $this->performAjaxValidation($model);
         if (isset($_POST['Scope'])) {
             $model->attributes = $_POST['Scope'];
-            if ($model->save())
+            
+            Picture::writeImageFilenames($model);
+            
+            if ($model->save()){
+                Picture::moveUploadedImages($model->id);
                 $this->redirect(array('view', 'id' => $model->id));
+            }
         }
 
         $this->render('create', array(
@@ -83,24 +88,17 @@ class ScopeController extends Controller {
         $cs->registerPackage('admin');
         
         $model = $this->loadModel($id);
+        
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
-        
         if (isset($_POST['Scope'])) {
+            $_POST['Scope']['picture'] = $model->picture;
+            $_POST['Scope']['thumb'] = $model->thumb;
+            
             $model->attributes = $_POST['Scope'];
-            
-            Picture::removeImages($model);
 
-            if ($_FILES['Scope']['name']['picture'] ){
-                $model->picture = $_FILES['Scope']['name']['picture'];
-            }
-            
-            if ($_FILES['Scope']['name']['thumb']){
-                $model->thumb = $_FILES['Scope']['name']['thumb'];
-            }
-            
-            Picture::moveUploadedImages($id);
-            
+            Picture::processImages($model);
+         
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -116,7 +114,9 @@ class ScopeController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) {
-        $this->loadModel($id)->delete();
+        $model = $this->loadModel($id);
+        Picture::clearImageFiles($model);        
+        $model->delete();
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
