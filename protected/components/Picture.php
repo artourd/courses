@@ -67,40 +67,33 @@ class Picture
      * Move Uploaded Images
      * @param int $id - model id
      */
-    static function moveUploadedImages($id){
+    static function moveUploadedImages($id, $modelName){
         $path = self::getBasePath();
-                
-        if ($_FILES['Scope']) {
-            self::makeDir($path.'\\scope\\');
-            self::makeDir($path.'\\scope\\'.$id.'\\');
+        $mname = strtolower($modelName);
+           
+        if ($_FILES[$modelName]) {
+            self::makeDir($path.'\\'.$mname.'\\');
+            self::makeDir($path.'\\'.$mname.'\\'.$id.'\\');
 
             Yii::import('application.vendors.*');
             require_once 'uploadPhoto.php';
             
-            if ($_FILES['Scope']['name']['picture']) {
-                self::makeDir($path.'\\scope\\'.$id.'\\pic\\');
-
-                /*move_uploaded_file(
-                        $_FILES['Scope']['tmp_name']['picture'], 
-                        $path . '\\scope\\'.$id.'\\pic\\' . 'orig_'. $_FILES['Scope']['name']['picture']);*/
+            if ($_FILES[$modelName]['name']['picture']) {
+                self::makeDir($path.'\\'.$mname.'\\'.$id.'\\pic\\');
                 
                 self::cropProcess('pic', 
-                        $path.'\\scope\\'.$id.'\\', 
-                        $_FILES['Scope']['tmp_name']['picture'], 
-                        $_FILES['Scope']['name']['picture']);
+                        $path.'\\'.$mname.'\\'.$id.'\\', 
+                        $_FILES[$modelName]['tmp_name']['picture'], 
+                        $_FILES[$modelName]['name']['picture']);
             }
-            if ($_FILES['Scope']['name']['thumb']) {
+            if ($_FILES[$modelName]['name']['thumb']) {
 
-                self::makeDir($path.'\\scope\\'.$id.'\\thumb\\');
-
-                /*move_uploaded_file(
-                        $_FILES['Scope']['tmp_name']['thumb'], 
-                        $path . '\\scope\\'.$id.'\\thumb\\' . 'orig_'. $_FILES['Scope']['name']['thumb']);*/
+                self::makeDir($path.'\\'.$mname.'\\'.$id.'\\thumb\\');
                 
                 self::cropProcess('thumb', 
-                        $path.'\\scope\\'.$id.'\\', 
-                        $_FILES['Scope']['tmp_name']['thumb'], 
-                        $_FILES['Scope']['name']['thumb']);
+                        $path.'\\'.$mname.'\\'.$id.'\\', 
+                        $_FILES[$modelName]['tmp_name']['thumb'], 
+                        $_FILES[$modelName]['name']['thumb']);
             }
         }
     }
@@ -111,16 +104,18 @@ class Picture
 
         self::writeImageFilenames($model);
 
-        self::moveUploadedImages($model->id);
+        self::moveUploadedImages($model->id, get_class($model));
     }
     
     static function writeImageFilenames(&$model){
-        if ($_FILES['Scope']['name']['picture']){
-            $model->picture = self::transliterate($_FILES['Scope']['name']['picture']);
+        $modelName = get_class($model);
+        
+        if ($_FILES[$modelName]['name']['picture']){
+            $model->picture = self::transliterate($_FILES[$modelName]['name']['picture']);
         }
 
-        if ($_FILES['Scope']['name']['thumb']){
-            $model->thumb = self::transliterate($_FILES['Scope']['name']['thumb']);
+        if ($_FILES[$modelName]['name']['thumb']){
+            $model->thumb = self::transliterate($_FILES[$modelName]['name']['thumb']);
         }        
     }
     
@@ -142,7 +137,7 @@ class Picture
     
     //
     static function removeImages(&$model){
-        if (isset($_POST['delpic']) && $_POST['delpic']){
+        if (isset($_POST['delpicture']) && $_POST['delpicture']){
             self::deleteImageFile(get_class($model), $model->id, 'pic', $model->picture);
             $model->picture = '';
         }

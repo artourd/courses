@@ -30,7 +30,7 @@
     
     <b><?php echo CHtml::encode($data->getAttributeLabel('picture')); ?>:</b>
 	<?php echo CHtml::encode($data->picture); ?>
-    <?=  Picture::getImage('scope', $data->id, 'pic', $data->picture);?>
+    <?=  Picture::getImage('scope', $data->id, 'picture', $data->picture);?>
 	<br /> 
     
     <b><?php echo CHtml::encode($data->getAttributeLabel('thumb')); ?>:</b>

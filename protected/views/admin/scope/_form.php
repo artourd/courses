@@ -38,8 +38,8 @@
 		<?php echo $form->labelEx($model,'picture'); ?>
 		<?php echo $form->fileField($model,'picture',array('size'=>50,'maxlength'=>50, 'class'=>($model->picture ? 'none': '') )); ?>
 		<?php echo $form->error($model,'picture'); ?>
-        <?=  Picture::getImage('scope', $model->id, 'pic', $model->picture)?>
-        <?= $model->picture ? Picture::getCross('pic', get_class($model)) : ''; ?>
+        <?=  Picture::getImage('scope', $model->id, 'picture', $model->picture)?>
+        <?= $model->picture ? Picture::getCross('picture', get_class($model)) : ''; ?>
 	</div>
     
 	<div class="row">
