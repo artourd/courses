@@ -45,6 +45,21 @@
 		<?php echo $form->label($model,'active'); ?>
 		<?php echo $form->textField($model,'active'); ?>
 	</div> 
+    
+	<div class="row">
+		<?php echo $form->label($model,'picture'); ?>
+		<?php echo $form->textField($model,'picture',array('size'=>50,'maxlength'=>50)); ?>
+	</div>
+  
+	<div class="row">
+		<?php echo $form->label($model,'thumb'); ?>
+		<?php echo $form->textField($model,'thumb',array('size'=>50,'maxlength'=>50)); ?>
+	</div>  
+
+	<div class="row">
+		<?php echo $form->label($model,'ico'); ?>
+		<?php echo $form->textField($model,'ico',array('size'=>50,'maxlength'=>50)); ?>
+	</div>     
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>

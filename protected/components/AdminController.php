@@ -61,17 +61,22 @@ class AdminController extends Controller {
         if (isset($_POST[$this->modelName])) {
             $model->attributes = $_POST[$this->modelName];
             
-            Picture::writeImageFilenames($model);
-            
             if ($model->save()){
+                Picture::writeImageFilenames($model);
+                $model->save();
+                
                 Picture::moveUploadedImages($model->id, $this->modelName);
                 $this->redirect(array('view', 'id' => $model->id));
             }
         }
-
-        $this->render('create', array(
-            'model' => $model,
-        ));
+        
+        $data = array_merge(array('model' => $model), $this->initRelData($model));
+        
+        $this->render('create', $data);
+    }
+    
+    protected function initRelData($model){
+        return array();
     }
 
     /**
@@ -80,16 +85,19 @@ class AdminController extends Controller {
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id) {
+       // print_r($_FILES); exit;
+        
         $cs = Yii::app()->clientScript;
         $cs->registerPackage('admin');
         
         $model = $this->loadModel($id);
-        
+
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
         if (isset($_POST[$this->modelName])) {
             $_POST[$this->modelName]['picture'] = $model->picture;
             $_POST[$this->modelName]['thumb'] = $model->thumb;
+            $_POST[$this->modelName]['ico'] = $model->ico;
             
             $model->attributes = $_POST[$this->modelName];
 
@@ -100,9 +108,9 @@ class AdminController extends Controller {
             }
         }
 
-        $this->render('update', array(
-            'model' => $model,
-        ));
+        $data = array_merge(array('model' => $model), $this->initRelData($model));
+        
+        $this->render('create', $data);
     }
 
     /**

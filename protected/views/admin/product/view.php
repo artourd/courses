@@ -28,5 +28,8 @@ $this->menu=array(
 		'created',
 		'updated',
         'active',
+        'picture',
+        'thumb',     
+        'ico',  
 	),
 )); ?>

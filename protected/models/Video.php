@@ -32,12 +32,16 @@ class Video extends CActiveRecord
 			array('link, desc', 'length', 'max'=>250),
             array('alias', 'length', 'max'=>50),
 			array('title', 'length', 'max'=>100),
+			array('desc', 'length', 'max'=>100),            
             array('created', 'length', 'max'=>20),
             array('updated', 'length', 'max'=>20),
+            array('picture', 'length', 'max'=>100),
+            array('thumb', 'length', 'max'=>100),
+            array('ico', 'length', 'max'=>100),              
             array('active', 'numerical', 'integerOnly'=>true),            
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, course_id, link, title, alias, desc', 'safe', 'on'=>'search'),
+			array('id, course_id, link, title, alias, desc, created, updated, active, picture, thumb, ico', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -67,7 +71,10 @@ class Video extends CActiveRecord
 			'desc' => 'Desc',
             'created' => 'Created',
             'updated' => 'Updated',
-            'active' => 'Active',            
+            'active' => 'Active',
+            'picture' => 'Picture',
+            'thumb' => 'Thumb',
+            'ico' => 'Ico',              
 		);
 	}
 
@@ -98,6 +105,9 @@ class Video extends CActiveRecord
         $criteria->compare('created',$this->created,true);
         $criteria->compare('updated',$this->updated,true);
         $criteria->compare('active',$this->active,true);
+        $criteria->compare('picture',$this->title,true);
+        $criteria->compare('thumb',$this->title,true);
+        $criteria->compare('ico',$this->title,true); 
         
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

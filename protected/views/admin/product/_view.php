@@ -32,6 +32,19 @@
     <b><?php echo CHtml::encode($data->getAttributeLabel('active')); ?>:</b>
 	<?php echo CHtml::encode($data->active); ?>
 	<br /> 
-
-
+    
+    <b><?php echo CHtml::encode($data->getAttributeLabel('picture')); ?>:</b>
+	<?php echo CHtml::encode($data->picture); ?>
+    <?=  Picture::getImage('product', $data->id, 'picture', $data->picture);?>
+	<br /> 
+    
+    <b><?php echo CHtml::encode($data->getAttributeLabel('thumb')); ?>:</b>
+	<?php echo CHtml::encode($data->thumb); ?>
+    <?=  Picture::getImage('product', $data->id, 'thumb', $data->thumb);?>
+	<br /> 
+    
+    <b><?php echo CHtml::encode($data->getAttributeLabel('ico')); ?>:</b>
+	<?php echo CHtml::encode($data->ico); ?>
+    <?=  Picture::getImage('product', $data->id, 'ico', $data->ico);?>
+	<br />  
 </div>

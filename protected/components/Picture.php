@@ -5,7 +5,7 @@ class Picture
     public static $imgParams = array(
         'pic' => array('width' => 400, 'height' => 400),
         'thumb' => array('width' => 160, 'height' => 160, 'crop' => true),
-        'icon' => array('width' => 40, 'height' => 40, 'crop' => true)
+        'ico' => array('width' => 40, 'height' => 40, 'crop' => true)
     );    
     
     /**
@@ -72,29 +72,38 @@ class Picture
         $mname = strtolower($modelName);
            
         if ($_FILES[$modelName]) {
-            self::makeDir($path.'\\'.$mname.'\\');
-            self::makeDir($path.'\\'.$mname.'\\'.$id.'\\');
+            self::makeDir($path.DIRECTORY_SEPARATOR.$mname.DIRECTORY_SEPARATOR);
+            self::makeDir($path.DIRECTORY_SEPARATOR.$mname.DIRECTORY_SEPARATOR.$id.DIRECTORY_SEPARATOR);
 
             Yii::import('application.vendors.*');
             require_once 'uploadPhoto.php';
             
             if ($_FILES[$modelName]['name']['picture']) {
-                self::makeDir($path.'\\'.$mname.'\\'.$id.'\\pic\\');
+                self::makeDir($path.DIRECTORY_SEPARATOR.$mname.DIRECTORY_SEPARATOR.$id.DIRECTORY_SEPARATOR.'pic'.DIRECTORY_SEPARATOR);
                 
                 self::cropProcess('pic', 
-                        $path.'\\'.$mname.'\\'.$id.'\\', 
+                        $path.DIRECTORY_SEPARATOR.$mname.DIRECTORY_SEPARATOR.$id.DIRECTORY_SEPARATOR, 
                         $_FILES[$modelName]['tmp_name']['picture'], 
-                        $_FILES[$modelName]['name']['picture']);
+                        $id.'.'.pathinfo($_FILES[$modelName]['name']['picture'], PATHINFO_EXTENSION));
             }
             if ($_FILES[$modelName]['name']['thumb']) {
 
-                self::makeDir($path.'\\'.$mname.'\\'.$id.'\\thumb\\');
+                self::makeDir($path.DIRECTORY_SEPARATOR.$mname.DIRECTORY_SEPARATOR.$id.DIRECTORY_SEPARATOR.'thumb'.DIRECTORY_SEPARATOR);
                 
                 self::cropProcess('thumb', 
-                        $path.'\\'.$mname.'\\'.$id.'\\', 
+                        $path.DIRECTORY_SEPARATOR.$mname.DIRECTORY_SEPARATOR.$id.DIRECTORY_SEPARATOR, 
                         $_FILES[$modelName]['tmp_name']['thumb'], 
-                        $_FILES[$modelName]['name']['thumb']);
+                        $id.'.'.pathinfo($_FILES[$modelName]['name']['thumb'], PATHINFO_EXTENSION));
             }
+            if ($_FILES[$modelName]['name']['ico']) {
+
+                self::makeDir($path.DIRECTORY_SEPARATOR.$mname.DIRECTORY_SEPARATOR.$id.DIRECTORY_SEPARATOR.'ico'.DIRECTORY_SEPARATOR);
+                
+                self::cropProcess('ico', 
+                        $path.DIRECTORY_SEPARATOR.$mname.DIRECTORY_SEPARATOR.$id.DIRECTORY_SEPARATOR, 
+                        $_FILES[$modelName]['tmp_name']['ico'], 
+                        $id.'.'.pathinfo($_FILES[$modelName]['name']['ico'], PATHINFO_EXTENSION));
+            }            
         }
     }
     
@@ -111,12 +120,16 @@ class Picture
         $modelName = get_class($model);
         
         if ($_FILES[$modelName]['name']['picture']){
-            $model->picture = self::transliterate($_FILES[$modelName]['name']['picture']);
+            $model->picture = $model->id.'.'.pathinfo($_FILES[$modelName]['name']['picture'], PATHINFO_EXTENSION);
         }
 
         if ($_FILES[$modelName]['name']['thumb']){
-            $model->thumb = self::transliterate($_FILES[$modelName]['name']['thumb']);
-        }        
+            $model->thumb = $model->id.'.'.pathinfo($_FILES[$modelName]['name']['thumb'], PATHINFO_EXTENSION);
+        }     
+        
+        if ($_FILES[$modelName]['name']['ico']){
+            $model->ico = $model->id.'.'.pathinfo($_FILES[$modelName]['name']['ico'], PATHINFO_EXTENSION);
+        }           
     }
     
     /**
@@ -128,7 +141,7 @@ class Picture
      */
     static function deleteImageFile($modelName, $modelId, $type, $name){
         $path = self::getBasePath();
-        $filedir = $path.'\\'.strtolower($modelName).'\\'.$modelId.'\\'.$type.'\\';
+        $filedir = $path.DIRECTORY_SEPARATOR.strtolower($modelName).DIRECTORY_SEPARATOR.$modelId.DIRECTORY_SEPARATOR.$type.DIRECTORY_SEPARATOR;
         if (is_file($filedir.$name)) {
             unlink($filedir.$name);
         }
@@ -144,21 +157,26 @@ class Picture
         if (isset($_POST['delthumb']) && $_POST['delthumb']){
             self::deleteImageFile(get_class($model), $model->id, 'thumb', $model->thumb);
             $model->thumb = '';
-        }        
+        }  
+        if (isset($_POST['delico']) && $_POST['delico']){
+            self::deleteImageFile(get_class($model), $model->id, 'ico', $model->ico);
+            $model->ico = '';
+        }         
     }
     
     static function clearImageFiles(&$model){
         $modelName = get_class($model);
         self::deleteImageFile($modelName, $model->id, 'pic', $model->picture);
         self::deleteImageFile($modelName, $model->id, 'thumb', $model->thumb);
-        self::remDir(self::getBasePath().'\\'.$modelName.'\\'.$model->id.'\\');
+        self::deleteImageFile($modelName, $model->id, 'ico', $model->ico);        
+        self::remDir(self::getBasePath().DIRECTORY_SEPARATOR.$modelName.DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR);
     }  
     
     
     function cropProcess($imgType, $path, $tmpfname, $fname){
         $imgData = self::$imgParams[$imgType];
         $handle = new uploadPhoto($tmpfname);
-      //print_r($handle); exit;
+
         if ($handle->uploaded) {
             $handle->file_new_name_body = self::transliterate($fname);
             $handle->file_new_name_ext = '';
@@ -177,7 +195,7 @@ class Picture
                 $handle->image_resize = false;
                 $handle->image_crop = '-' . $imgy . 'px -' . $imgx . 'px';
             }
-            $handle->process($path .$imgType.'\\');
+            $handle->process($path.$imgType.DIRECTORY_SEPARATOR);
             if(!$handle->processed) {
                 throw new CException('image uploader process error: '.$handle->error);
             }

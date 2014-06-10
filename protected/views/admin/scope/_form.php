@@ -50,6 +50,14 @@
         <?= $model->thumb ? Picture::getCross('thumb', get_class($model)) : ''; ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->labelEx($model,'ico'); ?>
+		<?php echo $form->fileField($model,'ico',array('size'=>50,'maxlength'=>50, 'class'=>($model->ico ? 'none': ''))); ?>
+		<?php echo $form->error($model,'ico'); ?>
+        <?=  Picture::getImage('scope', $model->id, 'ico', $model->ico);?>
+        <?= $model->ico ? Picture::getCross('ico', get_class($model)) : ''; ?>
+	</div>    
+    
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

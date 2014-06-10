@@ -28,14 +28,15 @@ class Scope extends CActiveRecord
 			array('id', 'numerical', 'integerOnly'=>true),
             array('alias', 'length', 'max'=>50),
 			array('title', 'length', 'max'=>50),
-            array('picture', 'length', 'max'=>50),
-            array('thumb', 'length', 'max'=>50),
+            array('picture', 'length', 'max'=>100),
+            array('thumb', 'length', 'max'=>100),
+            array('ico', 'length', 'max'=>100),            
             array('created', 'length', 'max'=>20),
             array('updated', 'length', 'max'=>20),
             array('active', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, alias, created, updated, active, picture, thumb', 'safe', 'on'=>'search'),
+			array('id, title, alias, created, updated, active, picture, thumb, ico', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,7 +64,8 @@ class Scope extends CActiveRecord
             'updated' => 'Updated',
             'active' => 'Active',
             'picture' => 'Picture',
-            'thumb' => 'Thumb'
+            'thumb' => 'Thumb',
+            'ico' => 'Ico',            
 		);
 	}
 
@@ -93,6 +95,7 @@ class Scope extends CActiveRecord
         $criteria->compare('active',$this->active,true);
         $criteria->compare('picture',$this->title,true);
         $criteria->compare('thumb',$this->title,true);
+        $criteria->compare('ico',$this->title,true);        
         
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

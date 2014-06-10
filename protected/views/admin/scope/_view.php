@@ -36,6 +36,11 @@
     <b><?php echo CHtml::encode($data->getAttributeLabel('thumb')); ?>:</b>
 	<?php echo CHtml::encode($data->thumb); ?>
     <?=  Picture::getImage('scope', $data->id, 'thumb', $data->thumb);?>
-	<br />     
+	<br /> 
+    
+    <b><?php echo CHtml::encode($data->getAttributeLabel('ico')); ?>:</b>
+	<?php echo CHtml::encode($data->ico); ?>
+    <?=  Picture::getImage('scope', $data->id, 'ico', $data->ico);?>
+	<br />    
 
 </div>

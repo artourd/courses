@@ -51,6 +51,11 @@
 		<?php echo $form->textField($model,'thumb',array('size'=>50,'maxlength'=>50)); ?>
 	</div>  
 
+	<div class="row">
+		<?php echo $form->label($model,'ico'); ?>
+		<?php echo $form->textField($model,'ico',array('size'=>50,'maxlength'=>50)); ?>
+	</div> 
+    
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>

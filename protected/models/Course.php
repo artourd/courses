@@ -31,10 +31,13 @@ class Course extends CActiveRecord
 			array('title', 'length', 'max'=>50),
             array('created', 'length', 'max'=>20),
             array('updated', 'length', 'max'=>20),
+            array('picture', 'length', 'max'=>100),
+            array('thumb', 'length', 'max'=>100),
+            array('ico', 'length', 'max'=>100),             
             array('active', 'numerical', 'integerOnly'=>true),            
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, alias, product_id', 'safe', 'on'=>'search'),
+			array('id, title, alias, product_id, created, updated, active, picture, thumb, ico', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,7 +65,10 @@ class Course extends CActiveRecord
 			'product_id' => 'Product',
             'created' => 'Created',
             'updated' => 'Updated',
-            'active' => 'Active',            
+            'active' => 'Active',
+            'picture' => 'Picture',
+            'thumb' => 'Thumb',
+            'ico' => 'Ico',             
 		);
 	}
 
@@ -91,6 +97,9 @@ class Course extends CActiveRecord
         $criteria->compare('created',$this->created,true);
         $criteria->compare('updated',$this->updated,true);
         $criteria->compare('active',$this->active,true);
+        $criteria->compare('picture',$this->title,true);
+        $criteria->compare('thumb',$this->title,true);
+        $criteria->compare('ico',$this->title,true); 
         
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
