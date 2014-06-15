@@ -15,4 +15,4 @@ $this->menu=array(
 
 <h1>Create Course</h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model, 'products' => $products)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model, 'scopes' => $scopes, 'products' => $products)); ?>

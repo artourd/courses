@@ -12,6 +12,9 @@
  */
 class Video extends CActiveRecord
 {
+    public $scope_id = null;
+    public $product_id = null;
+    
 	/**
 	 * @return string the associated database table name
 	 */
@@ -64,7 +67,9 @@ class Video extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'course_id' => 'Course',
+			'scope_id' => 'Scope',
+            'product_id' => 'Product',
+            'course_id' => 'Course',
 			'link' => 'Link',
 			'title' => 'Title',
             'alias' => 'alias',

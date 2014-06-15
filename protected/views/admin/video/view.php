@@ -22,7 +22,10 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
-		'course.title',
+        array(
+            'label'=>'Course',
+            'name'=>'course.title',
+        ),
 		'link',
 		'alias',
 		'title',
@@ -30,8 +33,20 @@ $this->menu=array(
 		'created',
 		'updated',
         'active',
-        'picture',
-        'thumb',     
-        'ico',  
+        array(
+            'label'=>'picture',
+            'type'=>'raw',
+            'value'=>array($this, 'gridPicture'),
+        ),        
+        array(
+            'label'=>'thumb',
+            'type'=>'raw',
+            'value'=>array($this, 'gridThumb'),
+        ),   
+        array(
+            'label'=>'ico',
+            'type'=>'raw',
+            'value'=>array($this, 'gridIco'),
+        ), 
 	),
 )); ?>

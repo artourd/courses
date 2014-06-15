@@ -10,6 +10,7 @@
  */
 class Course extends CActiveRecord
 {
+    public $scope_id = null;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -62,6 +63,7 @@ class Course extends CActiveRecord
 			'id' => 'ID',
 			'title' => 'Title',
             'alias' => 'alias',
+            'scope_id' => 'Scope',
 			'product_id' => 'Product',
             'created' => 'Created',
             'updated' => 'Updated',

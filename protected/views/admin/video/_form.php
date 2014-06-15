@@ -21,16 +21,29 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'scope_id'); ?>
+		<?php echo $form->dropDownList($model,'scope_id', $scopes); ?>
+		<?php echo $form->error($model,'scope_id'); ?>
+	</div>
+    
+	<div class="row">
+		<?php echo $form->labelEx($model,'product_id'); ?>
+		<?php echo $form->dropDownList($model,'product_id', $products); ?>
+		<?php echo $form->error($model,'product_id'); ?>
+	</div>
+    
+	<div class="row">
 		<?php echo $form->labelEx($model,'course_id'); ?>
 		<?php echo $form->dropDownList($model,'course_id', $courses); ?>
 		<?php echo $form->error($model,'course_id'); ?>
-	</div>
-
-	<div class="row">
+	</div>  
+    
+    <div class="row">
 		<?php echo $form->labelEx($model,'link'); ?>
 		<?php echo $form->textField($model,'link',array('size'=>60,'maxlength'=>250)); ?>
 		<?php echo $form->error($model,'link'); ?>
 	</div>
+    <input type="button" onclick="loadVideoData();" value="Load from Youtube" />
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'alias'); ?>
@@ -87,3 +100,24 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+
+<script>
+function loadVideoData(){    
+    $.ajax({
+        type: "POST",
+        url: '<?=Yii::app()->baseUrl;?>/index.php/admin/video/getVideoData/',
+        dataType: 'json',
+        data: {'source':'youtube', 'link': $('#Video_link').val()},
+        success: function(response){
+            if (response.success){
+                alert(response.data.channelTitle);
+            } else {
+                alert(response.error);
+            }
+        },
+        error: function(){
+            alert('Error loadVideoData');
+        },
+    });
+}    
+</script>    

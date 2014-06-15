@@ -26,7 +26,7 @@ class AdminController extends Controller {
                 'users' => array('@'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update'),
+                'actions' => array('create', 'update', 'GetVideoData'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -70,8 +70,7 @@ class AdminController extends Controller {
             }
         }
         
-        $data = array_merge(array('model' => $model), $this->initRelData($model));
-        
+        $data = array_merge(array('model' => $model), $this->initRelData($model));        
         $this->render('create', $data);
     }
     
@@ -178,4 +177,37 @@ class AdminController extends Controller {
         }
     }
 
+    public function gridPicture($data){
+        return Picture::getImage(get_class($data), $data->id, 'picture', $data['picture']);
+    }
+    
+    public function gridThumb($data){
+        return Picture::getImage(get_class($data), $data->id, 'thumb', $data['thumb']);
+    }    
+    
+    
+    public function gridIco($data){
+        return Picture::getImage(get_class($data), $data->id, 'ico', $data['ico']);
+    }
+
+    public function gridCheckbox($data) {
+        return ($data["active"] ? "<b>+</b>" : "");
+    }
+    
+    public function actionGetVideoData() {
+        $source = Yii::app()->request->getParam('source', 'youtube');
+        $linkf = Yii::app()->request->getParam('link');
+        $link1 = explode('?', $linkf);
+        $link2 = explode('=', $link1[1]); 
+        $link = $link2[1];
+
+        if (empty($link)){
+            return CJSON::encode(array('success' => false, 'error' => 'Empty link'));
+        }
+        if (empty($source)){
+            return CJSON::encode(array('success' => false, 'error' => 'Empty source'));
+        }
+        
+        echo CJSON::encode(VideoAdapter::getData($source, $link));
+    }
 }

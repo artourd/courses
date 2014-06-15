@@ -49,12 +49,37 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'alias',
 		'title',
 		'product.title',
-		'created',
-		'updated',
-        'active',
-        'picture',
-        'thumb',
-        'ico',  
+        array(
+            'name' => 'created',
+            'type' => 'html',
+            'value' => 'date("d.m.Y H:i:s", strtotime($data["created"]))',
+        ),        
+        array(
+            'name' => 'updated',
+            'type' => 'html',
+            'value' => 'date("d.m.Y H:i:s", strtotime($data["updated"]))',
+        ),        
+        array(
+            'name' => 'active',
+            'type' => 'html',
+            'value' => array($this, 'gridCheckbox'),
+        ),        
+        array(
+            'name' => 'picture',
+            'type' => 'html',
+            'value' => array($this, 'gridPicture'),
+        ),
+        array(
+            'name' => 'thumb',
+            'type' => 'html',
+            'value' => array($this, 'gridThumb'),
+        ),
+        array(
+            'name' => 'ico',
+            'type' => 'html',
+            'value' => array($this, 'gridIco'),
+            'cssClassExpression' => '"tx_c"',
+        ),   
 		array(
 			'class'=>'CButtonColumn',
 		),

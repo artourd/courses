@@ -24,12 +24,27 @@ $this->menu=array(
 		'id',
 		'alias',
 		'title',
-		'scope.title',
+        array(
+            'label'=>'Scope',
+            'name'=>'scope.title',
+        ),
 		'created',
 		'updated',
         'active',
-        'picture',
-        'thumb',     
-        'ico',  
+        array(
+            'label'=>'picture',
+            'type'=>'raw',
+            'value'=>array($this, 'gridPicture'),
+        ),        
+        array(
+            'label'=>'thumb',
+            'type'=>'raw',
+            'value'=>array($this, 'gridThumb'),
+        ),   
+        array(
+            'label'=>'ico',
+            'type'=>'raw',
+            'value'=>array($this, 'gridIco'),
+        ),
 	),
 )); ?>

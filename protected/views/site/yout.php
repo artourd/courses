@@ -21,7 +21,7 @@ require_once 'Google/Service/YouTube.php';
    * Google Developers Console <https://console.developers.google.com/>
    * Please ensure that you have enabled the YouTube Data API for your project.
    */
-  $DEVELOPER_KEY = 'AIzaSyDrEVQwrxxXd_jFAx-cFj6cCzqQxJVY4Vo';
+  $DEVELOPER_KEY = 'AIzaSyBFbAVMw3BhRPuMyP9ZKVpnIqoIv5V9SP4';
 
   $client = new Google_Client();
   $client->setDeveloperKey($DEVELOPER_KEY);

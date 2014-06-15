@@ -24,12 +24,27 @@ $this->menu=array(
 		'id',
 		'alias',
 		'title',
-		'product.title',
+        array(
+            'label'=>'Product',
+            'name'=>'product.title',
+        ),
 		'created',
 		'updated',
         'active',
-        'picture',
-        'thumb',     
-        'ico',  
+        array(
+            'label'=>'picture',
+            'type'=>'raw',
+            'value'=>array($this, 'gridPicture'),
+        ),        
+        array(
+            'label'=>'thumb',
+            'type'=>'raw',
+            'value'=>array($this, 'gridThumb'),
+        ),   
+        array(
+            'label'=>'ico',
+            'type'=>'raw',
+            'value'=>array($this, 'gridIco'),
+        ),
 	),
 )); ?>
