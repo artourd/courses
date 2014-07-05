@@ -21,7 +21,7 @@ require_once 'Google/Service/YouTube.php';
    * Google Developers Console <https://console.developers.google.com/>
    * Please ensure that you have enabled the YouTube Data API for your project.
    */
-  $DEVELOPER_KEY = 'AIzaSyBFbAVMw3BhRPuMyP9ZKVpnIqoIv5V9SP4';
+  $DEVELOPER_KEY = 'AIzaSyDWT97nNxj3hgEmTapObdVOrJhnmHVwvyE';
 
   $client = new Google_Client();
   $client->setDeveloperKey($DEVELOPER_KEY);
@@ -79,5 +79,5 @@ END;
 
 echo $htmlBody;
 echo "<pre>";
-print_r($searchResponse['items'][0]['snippet']);
+//if ($searchResponse) print_r($searchResponse['items'][0]['snippet']);
 echo "</pre>";

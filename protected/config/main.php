@@ -50,7 +50,7 @@ return array(
 		),
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=courses',
+			'connectionString' => 'mysql:host=127.0.0.1;dbname=courses',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',
@@ -79,10 +79,10 @@ return array(
         
         'clientScript'=>array(
             'packages'=>array(
-                'admin'=>array(
+                'jquery'=>array(
                     'baseUrl'=>'/yii/courses/js/',
-                    'js'=>array('admin.js'),
-                )
+                    'js'=>array('jquery-2.1.1.min.js'),
+                ),                             
             ),
         ),        
 	),

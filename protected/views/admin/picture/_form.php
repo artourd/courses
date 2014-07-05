@@ -19,25 +19,25 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->labelEx($model,'type'); ?>
 		<?php echo $form->textField($model,'type',array('size'=>7,'maxlength'=>7)); ?>
 		<?php echo $form->error($model,'type'); ?>
 	</div>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->labelEx($model,'height'); ?>
 		<?php echo $form->textField($model,'height'); ?>
 		<?php echo $form->error($model,'height'); ?>
 	</div>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->labelEx($model,'width'); ?>
 		<?php echo $form->textField($model,'width'); ?>
 		<?php echo $form->error($model,'width'); ?>
 	</div>
 
-	<div class="row">
+	<div class="form-group">
 		<?php /*echo $form->labelEx($model,'link'); ?>
 		<?php echo $form->fileField($model,'link',array('size'=>50,'maxlength'=>50)); ?>
 		<?php echo $form->error($model,'link'); */?>
@@ -49,19 +49,19 @@
         )); ?>      
 	</div>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->labelEx($model,'alt'); ?>
 		<?php echo $form->textField($model,'alt',array('size'=>50,'maxlength'=>50)); ?>
 		<?php echo $form->error($model,'alt'); ?>
 	</div>
     
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->labelEx($model,'active'); ?>
 		<?php echo $form->checkBox($model,'active',array('size'=>1,'maxlength'=>1)); ?>
 		<?php echo $form->error($model,'active'); ?>
 	</div>     
 
-	<div class="row buttons">
+	<div class="form-group buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
 

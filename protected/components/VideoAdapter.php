@@ -1,6 +1,6 @@
 <?php
 class VideoAdapter {
-    private static $DEVELOPER_KEY = 'AIzaSyDrEVQwrxxXd_jFAx-cFj6cCzqQxJVY4Vo'; //youtube
+    private static $DEVELOPER_KEY = 'AIzaSyCN82x2ZgblGdNlFCS3awVRg635bkq85I0'; //youtube
 
     public static function getData($source, $link) {
         switch ($source) {
@@ -13,7 +13,7 @@ class VideoAdapter {
         }
     }
 
-    public static function getYoutubeData($link) {
+    public static function getYoutubeData($link, $count = 1) {
         Yii::import('application.vendors.*');
         require_once 'Google/Client.php';
         require_once 'Google/Service/YouTube.php';
@@ -25,16 +25,51 @@ class VideoAdapter {
         $error = null;
       
         try {
-            $searchResponse = $youtube->search->listSearch('id,snippet', array('q' => $link, 'maxResults' => 1));
+            $searchResponse = $youtube->search->listSearch('id,snippet', array('q' => $link, 'maxResults' => $count));
         } catch (Google_ServiceException $e) {
             $error = $e->getMessage();
         } catch (Google_Exception $e) {
             $error = $e->getMessage();
         }
          
-        return array(
-            'success' => empty($error),
-            'error' => $error,
-            'data' => empty($error) ? $searchResponse['items'][0]['snippet'] : null);
+        if ($count == 1){
+            return array(
+                'success' => empty($error),
+                'error' => $error,
+                'data' => empty($error) ? $searchResponse['items'][0]['snippet'] : null);
+        } else {
+            return array(
+                'success' => empty($error),
+                'error' => $error,
+                'items' => empty($error) ? $searchResponse['items'] : null);            
+        }
+    }
+    
+    public static function link2data($source, $linkf){
+        $link1 = explode('?', $linkf);
+        $link2 = explode('=', $link1[1]); 
+        $link = $link2[1];
+
+        $data = VideoAdapter::getData($source, $link);
+
+        if ($data['success']){
+            $photos = $data['data']->getThumbnails();
+
+            $result = array(
+                'success' => true,
+                'title' => $data['data']['title'],
+                'desc' => $data['data']['description'],
+                'alias' => $data['data']['channelId'],
+                'picture' => $photos['high']['url'],
+                'thumb' => $photos['medium']['url'],
+                'ico' => $photos['default']['url'],
+                );
+        } else {
+            $result = array(
+                'success' => false,
+                'error' => $data['error'],
+                );
+        }        
+        return $result;
     }
 }    

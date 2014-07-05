@@ -35,7 +35,7 @@ class Video extends CActiveRecord
 			array('link, desc', 'length', 'max'=>250),
             array('alias', 'length', 'max'=>50),
 			array('title', 'length', 'max'=>100),
-			array('desc', 'length', 'max'=>100),            
+			array('desc', 'length', 'max'=>250),            
             array('created', 'length', 'max'=>20),
             array('updated', 'length', 'max'=>20),
             array('picture', 'length', 'max'=>100),

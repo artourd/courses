@@ -33,18 +33,26 @@ class Picture
     }
     
     /**
-     * Return full image path
-     * @param sting $modelName
-     * @param sting $type - pic or thumb
-     * @param int $id
-     * @param sting $name - filename
-     * @return string - full path to image
+     * 
+     * @param type $modelName
+     * @param type $modelId
+     * @param string $type
+     * @param type $name
+     * @return type
      */
     static function getImagePath($modelName, $modelId, $type, $name){
         if ($type == 'picture') $type = 'pic';
         return Yii::app()->request->baseUrl."/images" . '/'.$modelName.'/'.$modelId.'/'.$type.'/'.$name;
     }
     
+    /**
+     * 
+     * @param type $modelName
+     * @param type $modelId
+     * @param type $type
+     * @param type $name
+     * @return string
+     */
     static function getImage($modelName, $modelId, $type, $name){
         if ($name){
             return "<img src='".self::getImagePath($modelName, $modelId, $type, $name)."' width='40' height='40' id='img{$type}' />";
@@ -62,7 +70,15 @@ class Picture
         return "<a href='#' onclick='deleteImg(\"{$type}\", \"{$mname}\"); return false;' id='a{$type}'>[X]</a>"
         . "<input type='hidden' id='del{$type}' name='del{$type}' value='0'>";
     }
-    
+
+    static function getClear($type, $mname){
+        return "<a href='#' onclick='clearImg(\"{$type}\", \"{$mname}\"); return false;' id='ac{$type}'>[X]</a>";
+    }
+
+    static function getUrl($mname, $type, $value){
+        return "<input name='{$mname}_{$type}_url' type='text' value='{$value}' class='form-control' size='50' placeholder='{$type} url'/>";
+    }    
+
     /**
      * Move Uploaded Images
      * @param int $id - model id
@@ -107,7 +123,9 @@ class Picture
         }
     }
     
-    //
+    /*
+     * Main process of creating/updating image
+     */
     static function processImages(&$model){
         self::removeImages($model);
 
@@ -116,6 +134,9 @@ class Picture
         self::moveUploadedImages($model->id, get_class($model));
     }
     
+    /*
+     * Write to modl image names
+     */
     static function writeImageFilenames(&$model){
         $modelName = get_class($model);
         
@@ -148,7 +169,10 @@ class Picture
         self::remDir($filedir);
     }
     
-    //
+    /**
+     * 
+     * @param type $model
+     */
     static function removeImages(&$model){
         if (isset($_POST['delpicture']) && $_POST['delpicture']){
             self::deleteImageFile(get_class($model), $model->id, 'pic', $model->picture);
@@ -164,6 +188,10 @@ class Picture
         }         
     }
     
+    /**
+     * 
+     * @param type $model
+     */    
     static function clearImageFiles(&$model){
         $modelName = get_class($model);
         self::deleteImageFile($modelName, $model->id, 'pic', $model->picture);
@@ -172,13 +200,20 @@ class Picture
         self::remDir(self::getBasePath().DIRECTORY_SEPARATOR.$modelName.DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR);
     }  
     
-    
+    /**
+     * Crop
+     * @param type $imgType
+     * @param type $path
+     * @param type $tmpfname
+     * @param type $fname
+     * @throws CException
+     */
     function cropProcess($imgType, $path, $tmpfname, $fname){
         $imgData = self::$imgParams[$imgType];
         $handle = new uploadPhoto($tmpfname);
 
         if ($handle->uploaded) {
-            $handle->file_new_name_body = self::transliterate($fname);
+            $handle->file_new_name_body = $fname;
             $handle->file_new_name_ext = '';
             $handle->image_resize = true;
             $handle->image_y = $imgData['height'];
@@ -202,35 +237,5 @@ class Picture
         }  else {
             throw new CException('image uploader error: '.$handle->error);
         }      
-    }
-
-    static function transliterate($text, $lang = 'ru') {
-
-        $tr = array("А" => "A", "а" => "a", "Б" => "B", "б" => "b",
-          "В" => "V", "в" => "v", "Г" => "G", "г" => "g",
-          "Д" => "D", "д" => "d", "Е" => "E", "е" => "e",
-          "Ё" => "E", "ё" => "e", "Ж" => "Zh", "ж" => "zh",
-          "З" => "Z", "з" => "z", "И" => "I", "и" => "i",
-          "Й" => "Y", "й" => "y", "КС" => "X", "кс" => "x",
-          "К" => "K", "к" => "k", "Л" => "L", "л" => "l",
-          "М" => "M", "м" => "m", "Н" => "N", "н" => "n",
-          "О" => "O", "о" => "o", "П" => "P", "п" => "p",
-          "Р" => "R", "р" => "r", "С" => "S", "с" => "s",
-          "Т" => "T", "т" => "t", "У" => "U", "у" => "u",
-          "Ф" => "F", "ф" => "f", "Х" => "H", "х" => "h",
-          "Ц" => "Ts", "ц" => "ts", "Ч" => "Ch", "ч" => "ch",
-          "Ш" => "Sh", "ш" => "sh", "Щ" => "Sch", "щ" => "sch",
-          "Ы" => "Y", "ы" => "y", "Ь" => "", "ь" => "",
-          "Э" => "E", "э" => "e", "Ъ" => "", "ъ" => "",
-          "Ю" => "Yu", "ю" => "yu", "Я" => "Ya", "я" => "ya",
-          "І" => "I", "і" => "i", "Ї" => "Yi", "ї" => "yi",
-          "Є" => "E", "є" => "e", "'" => "", "Ґ" => "G", "ґ" => "g",
-          " " => "-", "[" => "", "]" => "", "(" => "", ")" => "", "%" => "");
-        if($lang === 'ua'){
-          $tr['И'] = "Y";
-          $tr['и'] = "y";
-        }
-        $str = strtr($text, $tr);
-        return $str;
     }
 }

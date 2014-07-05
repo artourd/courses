@@ -11,52 +11,52 @@
 	'method'=>'get',
 )); ?>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->label($model,'id'); ?>
 		<?php echo $form->textField($model,'id'); ?>
 	</div>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->label($model,'type'); ?>
 		<?php echo $form->textField($model,'type',array('size'=>7,'maxlength'=>7)); ?>
 	</div>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->label($model,'height'); ?>
 		<?php echo $form->textField($model,'height'); ?>
 	</div>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->label($model,'width'); ?>
 		<?php echo $form->textField($model,'width'); ?>
 	</div>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->label($model,'link'); ?>
 		<?php echo $form->textField($model,'link',array('size'=>50,'maxlength'=>50)); ?>
 	</div>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->label($model,'alt'); ?>
 		<?php echo $form->textField($model,'alt',array('size'=>50,'maxlength'=>50)); ?>
 	</div>
   
-  	<div class="row">
+  	<div class="form-group">
 		<?php echo $form->label($model,'created'); ?>
 		<?php echo $form->textField($model,'created'); ?>
 	</div>
   
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->label($model,'updated'); ?>
 		<?php echo $form->textField($model,'updated'); ?>
 	</div>
   
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->label($model,'active'); ?>
 		<?php echo $form->textField($model,'active'); ?>
 	</div> 
 
-	<div class="row buttons">
+	<div class="form-group buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>
 

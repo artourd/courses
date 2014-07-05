@@ -19,37 +19,37 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->labelEx($model,'rule'); ?>
 		<?php echo $form->textField($model,'rule',array('size'=>50,'maxlength'=>50)); ?>
 		<?php echo $form->error($model,'rule'); ?>
 	</div>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->labelEx($model,'title'); ?>
 		<?php echo $form->textField($model,'title',array('size'=>50,'maxlength'=>50)); ?>
 		<?php echo $form->error($model,'title'); ?>
 	</div>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->labelEx($model,'keyword'); ?>
 		<?php echo $form->textField($model,'keyword',array('size'=>50,'maxlength'=>50)); ?>
 		<?php echo $form->error($model,'keyword'); ?>
 	</div>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->labelEx($model,'desc'); ?>
 		<?php echo $form->textField($model,'desc',array('size'=>50,'maxlength'=>50)); ?>
 		<?php echo $form->error($model,'desc'); ?>
 	</div>
 
-    <div class="row">
+    <div class="form-group">
 		<?php echo $form->labelEx($model,'active'); ?>
 		<?php echo $form->checkBox($model,'active',array('size'=>1,'maxlength'=>1)); ?>
 		<?php echo $form->error($model,'active'); ?>
 	</div> 
     
-	<div class="row buttons">
+	<div class="form-group buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
 

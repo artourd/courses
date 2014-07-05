@@ -1,8 +1,9 @@
 <?php
 
-class AdminController extends Controller {
+abstract class AdminController extends Controller {
     public $modelName = 'admin';
     public $layout='//layouts/column2';
+    public $usePhotoProcess = true;
     
     /**
      * @return array action filters
@@ -26,7 +27,7 @@ class AdminController extends Controller {
                 'users' => array('@'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'GetVideoData'),
+                'actions' => array('create', 'update', 'getVideoData', 'loadVideoData', 'getProducts', 'getCourses'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -39,7 +40,28 @@ class AdminController extends Controller {
         );
     }
 
-    /**
+    public function init() {
+        $baseUrl = Yii::app()->baseUrl;
+		
+		$cs = Yii::app()->clientScript;
+		$cs->registerScriptFile($baseUrl . '/js/jquery-2.1.1.min.js', CClientScript::POS_HEAD);
+		$cs->registerScriptFile($baseUrl . '/js/bootstrap.min.js', CClientScript::POS_HEAD);
+        $cs->registerScriptFile($baseUrl . '/js/bootstrap-datetimepicker.min.js', CClientScript::POS_HEAD);
+        $cs->registerScriptFile($baseUrl . '/js/tinymce/tinymce.min.js', CClientScript::POS_HEAD);
+        //$cs->registerScriptFile($baseUrl . '/js/ckeditor/ckeditor.js', CClientScript::POS_HEAD);
+        //$cs->registerScriptFile($baseUrl . '/js/ckeditor/adapter-jquery.js', CClientScript::POS_HEAD);
+        
+        $cs->registerScriptFile($baseUrl . '/js/admin.js', CClientScript::POS_HEAD);
+        
+        $cs->registerCssFile($baseUrl . '/css/bootstrap.css');
+        $cs->registerCssFile($baseUrl . '/css/bootstrap-theme.css');
+        $cs->registerCssFile($baseUrl . '/css/bootstrap-datetimepicker.css');
+		$cs->registerCssFile($baseUrl . '/css/admin.css');
+        
+        parent::init();
+    }
+
+        /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
@@ -62,10 +84,12 @@ class AdminController extends Controller {
             $model->attributes = $_POST[$this->modelName];
             
             if ($model->save()){
-                Picture::writeImageFilenames($model);
-                $model->save();
-                
-                Picture::moveUploadedImages($model->id, $this->modelName);
+                if ($this->usePhotoProcess){
+                    Picture::writeImageFilenames($model);
+                    $model->save();
+
+                    Picture::moveUploadedImages($model->id, $this->modelName);
+                }
                 $this->redirect(array('view', 'id' => $model->id));
             }
         }
@@ -86,9 +110,6 @@ class AdminController extends Controller {
     public function actionUpdate($id) {
        // print_r($_FILES); exit;
         
-        $cs = Yii::app()->clientScript;
-        $cs->registerPackage('admin');
-        
         $model = $this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed
@@ -100,7 +121,9 @@ class AdminController extends Controller {
             
             $model->attributes = $_POST[$this->modelName];
 
-            Picture::processImages($model);
+            if ($this->usePhotoProcess){
+                Picture::processImages($model);
+            }
          
             if ($model->save()){
                 $this->redirect(array('view', 'id' => $model->id));
@@ -119,7 +142,11 @@ class AdminController extends Controller {
      */
     public function actionDelete($id) {
         $model = $this->loadModel($id);
-        Picture::clearImageFiles($model);        
+        
+        if ($this->usePhotoProcess){
+            Picture::clearImageFiles($model);        
+        }
+        
         $model->delete();
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
@@ -196,10 +223,7 @@ class AdminController extends Controller {
     
     public function actionGetVideoData() {
         $source = Yii::app()->request->getParam('source', 'youtube');
-        $linkf = Yii::app()->request->getParam('link');
-        $link1 = explode('?', $linkf);
-        $link2 = explode('=', $link1[1]); 
-        $link = $link2[1];
+        $link = Yii::app()->request->getParam('link');
 
         if (empty($link)){
             return CJSON::encode(array('success' => false, 'error' => 'Empty link'));
@@ -207,7 +231,67 @@ class AdminController extends Controller {
         if (empty($source)){
             return CJSON::encode(array('success' => false, 'error' => 'Empty source'));
         }
-        
-        echo CJSON::encode(VideoAdapter::getData($source, $link));
+            
+        $result = VideoAdapter::link2data($source, $link);
+
+        echo CJSON::encode($result);
     }
+    
+    function loadVideosData(){
+        $course_id = Yii::app()->request->getParam('course_id');
+        $source = Yii::app()->request->getParam('source');
+        
+        if (!$course_id){
+            echo CJSON::encode(array('success' => false, 'error' => 'No course_id'));
+            return false;
+        }
+        $lstr = Yii::app()->request->getParam('links');
+        $larr = explode(' ', $lstr);
+        foreach($larr as $link){
+            $result = VideoAdapter::link2data($source, $link);
+            
+            if ($result['success']){
+                //verify double of id video
+                
+                //create video item
+            }
+        }
+    }
+    
+    function actionGetProducts(){
+        $scope_id = Yii::app()->request->getParam('scope_id');
+        
+        $pcrit = null;
+        if ($scope_id){
+            $pcrit = new CDbCriteria();
+            $pcrit->condition = 'scope_id = "'.$scope_id.'"';
+        }
+        $productsObjects = Product::model()->findAll( $pcrit );
+
+        $products = array();
+        foreach ($productsObjects as $obj){
+            $products[$obj->id] = $obj->title;
+        }
+        
+        echo CJSON::encode($products);
+    }
+    
+    function actionGetCourses(){
+        $product_id = Yii::app()->request->getParam('product_id');
+                
+        $ccrit = null;
+        if ($product_id){        
+            $ccrit = new CDbCriteria();
+            $ccrit->condition = 'product_id = "'.$product_id.'"';
+        }
+        $coursesObjects = Course::model()->findAll( $ccrit );
+        
+        $courses = array();
+        foreach ($coursesObjects as $obj){
+          $courses[$obj->id] = $obj->title;
+        }  
+        
+        echo CJSON::encode($courses);
+    }
+    
 }
