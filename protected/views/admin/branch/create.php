@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	//array('label'=>'List Branch', 'url'=>array('index')),
+	array('label'=>'List Branch', 'url'=>array('index')),
 	array('label'=>'Manage Branch', 'url'=>array('admin')),
 );
 ?>

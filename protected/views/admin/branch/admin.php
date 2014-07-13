@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	//array('label'=>'List Branch', 'url'=>array('index')),
+	array('label'=>'List Branch', 'url'=>array('index')),
 	array('label'=>'Create Branch', 'url'=>array('create')),
 );
 
@@ -48,7 +48,11 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'id',
 		'alias',
 		'title',
-		'scope.title',
+        'ord',
+        array(
+            'header'=>'Scope',
+            'name'=>'scope.title',
+        ),
         array(
             'name' => 'created',
             'type' => 'html',

@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	//array('label'=>'List Seo', 'url'=>array('index')),
+	array('label'=>'List Seo', 'url'=>array('index')),
 	array('label'=>'Create Seo', 'url'=>array('create')),
 	array('label'=>'Update Seo', 'url'=>array('update', 'id'=>$model->id)),
 	array('label'=>'Delete Seo', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),

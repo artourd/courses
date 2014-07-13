@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	//array('label'=>'List Branch', 'url'=>array('index')),
+	array('label'=>'List Branch', 'url'=>array('index')),
 	array('label'=>'Create Branch', 'url'=>array('create')),
 	array('label'=>'View Branch', 'url'=>array('view', 'id'=>$model->id)),
 	array('label'=>'Manage Branch', 'url'=>array('admin')),

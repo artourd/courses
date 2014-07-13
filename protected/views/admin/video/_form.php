@@ -47,8 +47,8 @@
     <div class="form-group row">
 		<?php echo $form->labelEx($model,'link'); ?>
 		<?php echo $form->textField($model,'link',array('size'=>60,'maxlength'=>250)); ?>
-		<?php echo $form->error($model,'link'); ?>
-        <button type="button" onclick="loadVideoData();" class="btn btn-info">Load from Youtube</button>
+        <br><button type="button" onclick="loadVideoData();" class="btn btn-info">Load from Youtube</button>
+        <?php echo $form->error($model,'link'); ?>
 	</div>
         
 	<div class="form-group row">
@@ -74,6 +74,12 @@
 		<?php echo $form->checkBox($model,'active',array('size'=>1,'maxlength'=>1)); ?>
 		<?php echo $form->error($model,'active'); ?>
 	</div> 
+    
+	<div class="form-group row">
+		<?php echo $form->labelEx($model,'ord'); ?>
+		<?php echo $form->textField($model,'ord'); ?>
+		<?php echo $form->error($model,'ord'); ?>
+	</div>    
 
 	<div class="form-group row">
 		<?php echo $form->labelEx($model,'picture'); ?>
@@ -108,7 +114,7 @@
 function loadVideoData(){    
     $.ajax({
         type: "POST",
-        url: '<?=Yii::app()->baseUrl;?>/index.php/admin/video/getVideoData/',
+        url: '<?=Yii::app()->baseUrl;?>/admin/video/getVideoData/',
         dataType: 'json',
         data: {'source':'youtube', 'link': $('#Video_link').val()},
         success: function(data){

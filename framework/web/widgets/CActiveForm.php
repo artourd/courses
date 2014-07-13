@@ -769,6 +769,7 @@ class CActiveForm extends CWidget
 	 */
 	public function passwordField($model,$attribute,$htmlOptions=array())
 	{
+        $htmlOptions['class'] = isset($htmlOptions['class']) ? $htmlOptions['class'].' form-control' : 'form-control';
 		return CHtml::activePasswordField($model,$attribute,$htmlOptions);
 	}
 

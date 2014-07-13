@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	//array('label'=>'List Course', 'url'=>array('index')),
+	array('label'=>'List Course', 'url'=>array('index')),
 	array('label'=>'Create Course', 'url'=>array('create')),
 );
 
@@ -48,7 +48,11 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'id',
 		'alias',
 		'title',
-		'product.title',
+        'ord',
+        array(
+            'header'=>'Product',
+            'name'=>'product.title',
+        ),
         array(
             'name' => 'created',
             'type' => 'html',

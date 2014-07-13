@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	//array('label'=>'List Video', 'url'=>array('index')),
+	array('label'=>'List Video', 'url'=>array('index')),
 	array('label'=>'Manage Video', 'url'=>array('admin')),
 );
 ?>

@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	//array('label'=>'List Video', 'url'=>array('index')),
+	array('label'=>'List Video', 'url'=>array('index')),
 	array('label'=>'Create Video', 'url'=>array('create')),
 );
 
@@ -46,11 +46,15 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
-		'course.title',
-		'link',
+        'ord',
+        array(
+            'header'=>'Course',
+            'name'=>'course.title',
+        ),
+		//'link',
 		'alias',
 		'title',
-		'desc',
+		//'desc',
         array(
             'name' => 'created',
             'type' => 'html',
@@ -65,21 +69,11 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
             'name' => 'active',
             'type' => 'html',
             'value' => array($this, 'gridCheckbox'),
-        ),        
-        array(
-            'name' => 'picture',
-            'type' => 'html',
-            'value' => array($this, 'gridPicture'),
-        ),
-        array(
-            'name' => 'thumb',
-            'type' => 'html',
-            'value' => array($this, 'gridThumb'),
         ),
         array(
             'name' => 'ico',
             'type' => 'html',
-            'value' => array($this, 'gridIco'),
+            'value' => array($this, 'gridImgIco'),
             'cssClassExpression' => '"tx_c"',
         ),  
 		array(

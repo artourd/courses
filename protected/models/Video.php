@@ -79,7 +79,7 @@ class Video extends CActiveRecord
             'created' => 'Created',
             'updated' => 'Updated',
             'active' => 'Active',
-            'order' => 'Order',
+            'ord' => 'Order',
             'picture' => 'Picture',
             'thumb' => 'Thumb',
             'ico' => 'Ico',              
@@ -116,7 +116,7 @@ class Video extends CActiveRecord
         $criteria->compare('picture',$this->title,true);
         $criteria->compare('thumb',$this->title,true);
         $criteria->compare('ico',$this->title,true); 
-        $criteria->compare('order',$this->order,true); 
+        $criteria->compare('order',$this->ord,true); 
         
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -142,5 +142,23 @@ class Video extends CActiveRecord
         $this->updated = date('Y-m-d H:i:s');
         
         return parent::beforeSave();
-    }      
+    }     
+    
+    public static function existByAlias($alias, $course_id = null){
+        $crit = new CDbCriteria();
+        if ($course_id){
+            $crit->condition = 'course_id = :course_id AND alias = :alias';
+            $crit->params = array(':course_id' => $course_id, ':alias' => $alias);
+        } else {
+            $crit->condition = 'alias = :alias';
+            $crit->params = array(':alias' => $alias);
+        }
+        return (bool) Video::model()->count($crit);
+    }
+
+    public static function getMaxOrder($course_id){
+        return Yii::app()->db->createCommand("SELECT MAX(ord) FROM video WHERE course_id = :course_id")
+            ->bindValue(':course_id', $course_id)
+            ->queryScalar();
+    }
 }

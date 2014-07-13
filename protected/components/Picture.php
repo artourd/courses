@@ -61,6 +61,14 @@ class Picture
         }
     }
     
+    static function getImg($src){
+        if ($src){
+            return "<img src='{$src}' width='40' height='40' />";
+        } else {
+            return "";
+        }
+    }    
+    
     /**
      * Get cross for delete image
      * @param type $type

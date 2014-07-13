@@ -27,8 +27,7 @@ abstract class AdminController extends Controller {
                 'users' => array('@'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'getVideoData', 'loadVideoData', 
-                    'getProducts', 'getBranches', 'getCourses', 'Catalog'),
+                'actions' => array('create', 'update', 'getProducts', 'getBranches', 'getCourses'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -54,6 +53,7 @@ abstract class AdminController extends Controller {
         $cs->registerScriptFile($baseUrl . '/js/tinymce/tinymce.min.js', CClientScript::POS_HEAD);
         //$cs->registerScriptFile($baseUrl . '/js/ckeditor/ckeditor.js', CClientScript::POS_HEAD);
         //$cs->registerScriptFile($baseUrl . '/js/ckeditor/adapter-jquery.js', CClientScript::POS_HEAD);
+        $cs->registerScriptFile($baseUrl . '/js/jquery.ba-bbq.js', CClientScript::POS_HEAD);
         
         $cs->registerScriptFile($baseUrl . '/js/admin.js', CClientScript::POS_HEAD);
         
@@ -223,46 +223,17 @@ abstract class AdminController extends Controller {
     public function gridIco($data){
         return Picture::getImage(get_class($data), $data->id, 'ico', $data['ico']);
     }
+    
+    public function gridImgIco($data){
+        return $this->gridImg($data['ico']);
+    }
+    
+    public function gridImg($src){
+        return Picture::getImg($src);
+    }    
 
     public function gridCheckbox($data) {
         return ($data["active"] ? "<b>+</b>" : "");
-    }
-    
-    public function actionGetVideoData() {
-        $source = Yii::app()->request->getParam('source', 'youtube');
-        $link = Yii::app()->request->getParam('link');
-
-        if (empty($link)){
-            return CJSON::encode(array('success' => false, 'error' => 'Empty link'));
-        }
-        if (empty($source)){
-            return CJSON::encode(array('success' => false, 'error' => 'Empty source'));
-        }
-            
-        $result = VideoAdapter::link2data($source, $link);
-
-        echo CJSON::encode($result);
-    }
-    
-    function loadVideosData(){
-        $course_id = Yii::app()->request->getParam('course_id');
-        $source = Yii::app()->request->getParam('source');
-        
-        if (!$course_id){
-            echo CJSON::encode(array('success' => false, 'error' => 'No course_id'));
-            return false;
-        }
-        $lstr = Yii::app()->request->getParam('links');
-        $larr = explode(' ', $lstr);
-        foreach($larr as $link){
-            $result = VideoAdapter::link2data($source, $link);
-            
-            if ($result['success']){
-                //verify double of id video
-                
-                //create video item
-            }
-        }
     }
     
     function actionGetBranches(){

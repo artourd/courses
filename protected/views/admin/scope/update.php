@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	//array('label'=>'List Scope', 'url'=>array('index')),
+	array('label'=>'List Scope', 'url'=>array('index')),
 	array('label'=>'Create Scope', 'url'=>array('create')),
 	array('label'=>'View Scope', 'url'=>array('view', 'id'=>$model->id)),
 	array('label'=>'Manage Scope', 'url'=>array('admin')),

@@ -55,6 +55,12 @@
 		<?php echo $form->checkBox($model,'active',array('size'=>1,'maxlength'=>1)); ?>
 		<?php echo $form->error($model,'active'); ?>
 	</div> 
+    
+	<div class="form-group row">
+		<?php echo $form->labelEx($model,'ord'); ?>
+		<?php echo $form->textField($model,'ord'); ?>
+		<?php echo $form->error($model,'ord'); ?>
+	</div>     
 
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'picture'); ?>
@@ -78,12 +84,17 @@
 		<?php echo $form->error($model,'ico'); ?>
         <?=  Picture::getImage('course', $model->id, 'ico', $model->ico);?>
         <?= $model->ico ? Picture::getCross('ico', get_class($model)) : ''; ?>
-	</div>      
+	</div>     
     
-    <button type="button" onclick="loadVideosData();" class="btn btn-info">Load from Youtube</button>
-        
-    <textarea id="loadVideos"></textarea>
-
+    <input type="hidden" id="course_id" name="course_id" value="<?=$model->id?>">
+    
+    <?php if ($model->id): ?>
+    <button type="button" onclick="uploadVideoData();" class="btn btn-info">Load from Youtube</button>
+    <span id="uploadVideoResult" style="margin-left: 10px"></span>
+    <br>   <br>     
+    <textarea id="videoLinks" class="form-control" cols="80" rows="8"></textarea>
+    <br>
+    <?php endif; ?>
     
 	<div class="form-group buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
@@ -92,3 +103,24 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+<script>
+function uploadVideoData(){
+    $('#uploadVideoResult').html('Uploading...');
+    $.ajax({
+        type: "POST",
+        url: '<?=Yii::app()->baseUrl;?>/admin/video/uploadVideoData/',
+        dataType: 'json',
+        data: {'source':'youtube', 'course_id': $('#course_id').val(), 'links': $('#videoLinks').val(), 'source': 'youtube'},
+        success: function(data){
+            if (data.success == true){
+                $('#uploadVideoResult').html('Success, uploaded: '+data.count);
+            } else {
+                $('#uploadVideoResult').html('Error: '+data.error);
+            }
+        },
+        error: function(){
+            $('#uploadVideoResult').html('Error in request');
+        },
+    });
+}  
+</script>

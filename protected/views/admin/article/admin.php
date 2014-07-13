@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	//array('label'=>'List Article', 'url'=>array('index')),
+	array('label'=>'List Article', 'url'=>array('index')),
 	array('label'=>'Create Article', 'url'=>array('create')),
 );
 
@@ -49,10 +49,26 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'alias',
 		'title',
 		'short',
-		'content',
-		'created',
-		'updated',
-		'published',
+        'ord',
+        array(
+            'header'=>'Product',
+            'name'=>'product.title',
+        ),
+        array(
+            'name' => 'published',
+            'type' => 'html',
+            'value' => 'date("d.m.Y H:i:s", strtotime($data["published"]))',
+        ),        
+        array(
+            'name' => 'created',
+            'type' => 'html',
+            'value' => 'date("d.m.Y H:i:s", strtotime($data["created"]))',
+        ),        
+        array(
+            'name' => 'updated',
+            'type' => 'html',
+            'value' => 'date("d.m.Y H:i:s", strtotime($data["updated"]))',
+        ),        
 		'author_id',
 		'meta_desc',
 		'meta_keys',

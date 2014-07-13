@@ -4,10 +4,8 @@ class VideoAdapter {
 
     public static function getData($source, $link) {
         switch ($source) {
-            case 'youtube':
+            case 'youtube': default:
                 return self::getYoutubeData($link);
-                break;
-            default:
                 break;
         }
     }
@@ -44,21 +42,19 @@ class VideoAdapter {
         }
     }
     
-    public static function link2data($source, $linkf){
-        $link1 = explode('?', $linkf);
-        $link2 = explode('=', $link1[1]); 
-        $link = $link2[1];
+    public static function link2data($source, $link){
+        $linkId = self::linkToId($link);
 
-        $data = VideoAdapter::getData($source, $link);
+        $data = VideoAdapter::getData($source, $linkId);
 
         if ($data['success']){
             $photos = $data['data']->getThumbnails();
-
+            
             $result = array(
                 'success' => true,
                 'title' => $data['data']['title'],
                 'desc' => $data['data']['description'],
-                'alias' => $data['data']['channelId'],
+                'alias' => $linkId,
                 'picture' => $photos['high']['url'],
                 'thumb' => $photos['medium']['url'],
                 'ico' => $photos['default']['url'],
@@ -70,5 +66,17 @@ class VideoAdapter {
                 );
         }        
         return $result;
+    }
+    
+    public static function linkToId($link, $source = 'youtube'){
+        $linkId = null;
+        switch ($source) {
+            case 'youtube': default:
+                $link1 = explode('?', trim($link));
+                $link2 = count($link1) == 2 ? explode('=', $link1[1]) : null;
+                $linkId = $link2 && (count($link2) == 2) ? $link2[1] : null;
+                break;
+        }
+        return $linkId;
     }
 }    

@@ -103,7 +103,7 @@ class Settings extends CActiveRecord
         if (!self::$_setttings){
             $setts = Settings::model()->findAll();
             foreach ($setts as $sett){
-                self::$_setttings[$sett->name] = $sett->value;
+                self::$_setttings[$sett->name] = trim($sett->value);
             }
         }
         return self::$_setttings[$name] ? self::$_setttings[$name] : null;

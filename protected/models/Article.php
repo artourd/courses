@@ -54,6 +54,7 @@ class Article extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'product'=>array(self::BELONGS_TO, 'Product', 'product_id'),
 		);
 	}
 
@@ -74,7 +75,7 @@ class Article extends CActiveRecord
 			'updated' => 'Updated',
 			'published' => 'Published',
 			'author_id' => 'Author',
-            'order' => 'Order',
+            'ord' => 'Order',
 			'meta_desc' => 'Meta Desc',
 			'meta_keys' => 'Meta Keys',
 		);
@@ -108,7 +109,7 @@ class Article extends CActiveRecord
 		$criteria->compare('updated',$this->updated,true);
 		$criteria->compare('published',$this->published,true);
 		$criteria->compare('author_id',$this->author_id,true);
-        $criteria->compare('order',$this->order,true);
+        $criteria->compare('order',$this->ord,true);
 		$criteria->compare('meta_desc',$this->meta_desc,true);
 		$criteria->compare('meta_keys',$this->meta_keys,true);
 
