@@ -1,16 +1,16 @@
-<link rel="stylesheet" type="text/css" href="/courses/css/file-browser.css" />
-<script type="text/javascript" src="/courses/js/jquery-2.1.1.min.js" ></script>
-<script type="text/javascript" src="/courses/js/file-browser.js" ></script>
+<link rel="stylesheet" type="text/css" href="../css/file-browser.css" />
+<script type="text/javascript" src="../js/jquery-2.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/file-browser.js" ></script>
 
 <div class="buttons">
     <input id="newfolder" type="text" value="" />
-    <a href="#" onclick="addfolder('<?=$q?>'); return false;" ><img src="/courses/css/img/folderadd.gif" alt="new folder" title="new folder"></a>
-    <a href="#" onclick="delfolder('<?=$q?>'); return false;" ><img src="/courses/css/img/folderdel.gif" alt="delete folder" title="delete folder"></a>
-    <a href="" onclick="refresh('<?=$q?>')"><img src="/courses/css/img/refresh.gif" alt="refresh" title="refresh"></a>  
-    <form method="post" action="/courses/admin/file/" id="frmAddImage" enctype="multipart/form-data" style="float: right">
+    <a href="#" onclick="addfolder('<?=$q?>'); return false;" ><img src="../css/img/folderadd.gif" alt="new folder" title="new folder"></a>
+    <a href="#" onclick="delfolder('<?=$q?>'); return false;" ><img src="../css/img/folderdel.gif" alt="delete folder" title="delete folder"></a>
+    <a href="" onclick="refresh('<?=$q?>')"><img src="../css/img/refresh.gif" alt="refresh" title="refresh"></a>  
+    <form method="post" action="../admin/file/" id="frmAddImage" enctype="multipart/form-data" style="float: right">
         <input type="file" name="newimage" id="newimage" value="" />
         <input type="hidden" name="q" value="<?=$q;?>" />
-        <a href="" onclick="upload('<?=$q;?>'); return false;"><img src="/courses/css/img/add.gif" alt="upload" title="upload"></a>
+        <a href="" onclick="upload('<?=$q;?>'); return false;"><img src="../css/img/add.gif" alt="upload" title="upload"></a>
     </form>
 </div>
 <div class="clear"></div>
@@ -32,14 +32,14 @@
 <div >
     <div class="files">
         <?php foreach ($images as $image ): ?>
-        <a href="" onclick="setInput('<?='/courses/images/'.$q.'/'.$image?>');">
-            <img height="100" width="100" src="<?='/courses/images/'.$q.'/'.$image?>" title="<?=$image?>" alt="<?=$image?>"/>
+        <a href="" onclick="setInput('<?='../images/'.$q.'/'.$image?>');">
+            <img height="100" width="100" src="<?='../images/'.$q.'/'.$image?>" title="<?=$image?>" alt="<?=$image?>"/>
         </a>
         <?php endforeach; ?>
     </div>
     <div>
         <?php foreach ($files as $file ): ?>
-        <a href="" onclick="setInput('<?='/courses/images/'.$q.'/'.$file?>');"><?=$file?></a>
+        <a href="" onclick="setInput('<?='../images/'.$q.'/'.$file?>');"><?=$file?></a>
         <?php endforeach; ?>        
     </div>    
 </div>

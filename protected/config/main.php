@@ -50,18 +50,18 @@ return array(
 			),
 		),
 		
-		'db'=>YII_DEBUG ? array(
-			'connectionString' => 'mysql:host=127.0.0.1;dbname=gbua_ad_courses',
-			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
-			'charset' => 'utf8',
-		) : array(
+		'db'=>IS_PROD ? array(
             'connectionString' => 'mysql:host=mysql306.1gb.ua;dbname=gbua_ad_courses',
             'emulatePrepare' => true,
             'username' => 'gbua_ad_courses',
             'password' => '02fd65f43234',
             'charset' => 'utf8',
+		) : array(
+            'connectionString' => 'mysql:host=127.0.0.1;dbname=gbua_ad_courses',
+			'emulatePrepare' => true,
+			'username' => 'root',
+			'password' => '',
+			'charset' => 'utf8',
         ),
 
 		'errorHandler'=>array(

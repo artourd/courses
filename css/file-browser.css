@@ -30,11 +30,11 @@
 }
 .folders a.dir{
     padding-left: 20px;
-    background: url("/courses/css/img/folder.gif") no-repeat scroll 0px 4px rgba(0, 0, 0, 0);
+    background: url("../css/img/folder.gif") no-repeat scroll 0px 4px rgba(0, 0, 0, 0);
 }
 .folders a.up{
     padding-left: 20px;
-    background: url("/courses/css/img/folderopen.gif") no-repeat scroll 0px 4px rgba(0, 0, 0, 0);
+    background: url("../css/img/folderopen.gif") no-repeat scroll 0px 4px rgba(0, 0, 0, 0);
 }
 .folders a.home{
     /*padding-left: 20px;

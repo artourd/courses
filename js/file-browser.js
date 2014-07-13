@@ -27,7 +27,7 @@ function addfolder(q){
         alert('Empty folder');
     } else {
         $.ajax({
-            url: '/courses/admin/file/addfolder/?folder=' + q + '/' + $('#newfolder').val(),
+            url: 'admin/file/addfolder/?folder=' + q + '/' + $('#newfolder').val(),
             success: function() {
                 refresh(q);
             },
@@ -40,7 +40,7 @@ function addfolder(q){
 function delfolder(q){
     if (confirm('Delete current folder?')){
         $.ajax({
-            url: '/courses/admin/file/delfolder/?folder=' + q,
+            url: 'admin/file/delfolder/?folder=' + q,
             success: function() {
                 refresh(q);
             },
