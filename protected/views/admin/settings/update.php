@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Settings', 'url'=>array('index')),
+	//array('label'=>'List Settings', 'url'=>array('index')),
 	array('label'=>'Create Settings', 'url'=>array('create')),
 	array('label'=>'View Settings', 'url'=>array('view', 'id'=>$model->id)),
 	array('label'=>'Manage Settings', 'url'=>array('admin')),

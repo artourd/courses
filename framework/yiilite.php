@@ -4891,6 +4891,7 @@ class CHtml
 	public static function submitButton($label='submit',$htmlOptions=array())
 	{
 		$htmlOptions['type']='submit';
+        $htmlOptions['class'] = isset($htmlOptions['class']) ? $htmlOptions['class'].' btn btn-primary' : 'btn btn-primary';        
 		return self::button($label,$htmlOptions);
 	}
 	public static function resetButton($label='reset',$htmlOptions=array())

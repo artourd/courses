@@ -124,6 +124,17 @@ class Scope extends CActiveRecord
         
         return parent::beforeSave();
     }
+    
+    public static function getForDropDown(){
+        $allModels = Scope::model()->findAll();
+        
+        $items = array();
+        foreach ($allModels as $model){
+            $items[$model->id] = $model->title;
+        }
+        reset($items);
+        return $items;
+    }
 
 
 }

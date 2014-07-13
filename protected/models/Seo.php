@@ -100,4 +100,14 @@ class Seo extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+    
+    protected function beforeSave()
+    {
+        if (empty($this->created)){
+          $this->created = date('Y-m-d H:i:s');
+        }
+        $this->updated = date('Y-m-d H:i:s');
+        
+        return parent::beforeSave();
+    }    
 }

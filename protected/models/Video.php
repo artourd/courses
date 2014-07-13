@@ -13,6 +13,7 @@
 class Video extends CActiveRecord
 {
     public $scope_id = null;
+    public $branch_id = null;    
     public $product_id = null;
     
 	/**
@@ -31,6 +32,7 @@ class Video extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+            array('course_id', 'required'),
 			array('id, course_id', 'numerical', 'integerOnly'=>true),
 			array('link, desc', 'length', 'max'=>250),
             array('alias', 'length', 'max'=>50),
@@ -44,7 +46,7 @@ class Video extends CActiveRecord
             array('active', 'numerical', 'integerOnly'=>true),            
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, course_id, link, title, alias, desc, created, updated, active, picture, thumb, ico', 'safe', 'on'=>'search'),
+			array('id, course_id, link, title, alias, desc, created, updated, active, picture, thumb, ico, order ', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -77,6 +79,7 @@ class Video extends CActiveRecord
             'created' => 'Created',
             'updated' => 'Updated',
             'active' => 'Active',
+            'order' => 'Order',
             'picture' => 'Picture',
             'thumb' => 'Thumb',
             'ico' => 'Ico',              
@@ -113,6 +116,7 @@ class Video extends CActiveRecord
         $criteria->compare('picture',$this->title,true);
         $criteria->compare('thumb',$this->title,true);
         $criteria->compare('ico',$this->title,true); 
+        $criteria->compare('order',$this->order,true); 
         
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

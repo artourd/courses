@@ -11,7 +11,7 @@ return array(
 
 	// preloading 'log' component
 	'preload'=>array('log'),
-
+    
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',
@@ -40,6 +40,7 @@ return array(
 		// uncomment the following to enable URLs in path-format
 		
 		'urlManager'=>array(
+            'showScriptName'=>false,            
 			'urlFormat'=>'path',
 			'rules'=>array(
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
@@ -49,13 +50,19 @@ return array(
 			),
 		),
 		
-		'db'=>array(
-			'connectionString' => 'mysql:host=127.0.0.1;dbname=courses',
+		'db'=>YII_DEBUG ? array(
+			'connectionString' => 'mysql:host=127.0.0.1;dbname=gbua_ad_courses',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',
 			'charset' => 'utf8',
-		),
+		) : array(
+            'connectionString' => 'mysql:host=mysql306.1gb.ua;dbname=gbua_ad_courses',
+            'emulatePrepare' => true,
+            'username' => 'gbua_ad_courses',
+            'password' => '02fd65f43234',
+            'charset' => 'utf8',
+        ),
 
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
@@ -79,10 +86,10 @@ return array(
         
         'clientScript'=>array(
             'packages'=>array(
-                'jquery'=>array(
-                    'baseUrl'=>'/yii/courses/js/',
+                /*'jquery'=>array(
+                    'baseUrl'=>'/js/',
                     'js'=>array('jquery-2.1.1.min.js'),
-                ),                             
+                ),*/                             
             ),
         ),        
 	),

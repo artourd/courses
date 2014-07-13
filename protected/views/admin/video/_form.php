@@ -27,6 +27,12 @@
 	</div>
     
 	<div class="form-group row">
+		<?php echo $form->labelEx($model,'branch_id'); ?>
+		<?php echo $form->dropDownList($model,'branch_id', $branches); ?>
+		<?php echo $form->error($model,'branch_id'); ?>
+	</div>    
+    
+	<div class="form-group row">
 		<?php echo $form->labelEx($model,'product_id'); ?>
 		<?php echo $form->dropDownList($model,'product_id', $products); ?>
 		<?php echo $form->error($model,'product_id'); ?>
@@ -42,7 +48,7 @@
 		<?php echo $form->labelEx($model,'link'); ?>
 		<?php echo $form->textField($model,'link',array('size'=>60,'maxlength'=>250)); ?>
 		<?php echo $form->error($model,'link'); ?>
-        <!-- button type="button" onclick="loadVideoData();" class="btn btn-info">Load from Youtube</button -->
+        <button type="button" onclick="loadVideoData();" class="btn btn-info">Load from Youtube</button>
 	</div>
         
 	<div class="form-group row">
@@ -136,52 +142,6 @@ $(document).ready(function(){
     $('#Video_link').on('change', function(){
         loadVideoData();
     });   
-
-    $('#Video_scope_id').on('change', function(){
-        $.ajax({
-            type: "POST",
-            url: '<?= Yii::app()->baseUrl; ?>/index.php/admin/video/getProducts/',
-            dataType: 'json',
-            data: {'scope_id':$('#Video_scope_id').val()},
-            success: function(data){
-                if (data){
-                    var opt = '';
-                    $.each(data, function(elem, ind){
-                        opt += '<option value="'+elem+'" >'+ind+'</option>';
-                    })
-                    $('#Video_product_id').html(opt);
-                    $('#Video_product_id').change();
-                } else {
-                    console.log('No products');
-                }
-            },
-            error: function(){
-                alert('Error change scope');
-            },
-        });        
-    });
-    $('#Video_product_id').on('change', function(){
-        $.ajax({
-            type: "POST",
-            url: '<?= Yii::app()->baseUrl; ?>/index.php/admin/video/getCourses/',
-            dataType: 'json',
-            data: {'product_id':$('#Video_product_id').val()},
-            success: function(data){
-                if (data){
-                    var opt = '';
-                    $.each(data, function(elem, ind){
-                        opt += '<option value="'+elem+'" >'+ind+'</option>';
-                    })
-                    $('#Video_course_id').html(opt);                    
-                } else {
-                    console.log('No courses');
-                }
-            },
-            error: function(){
-                alert('Error change product');
-            },
-        });        
-    });
 })
 
 </script>    

@@ -39,6 +39,12 @@
 	</div>    
     
 	<div class="form-group">
+		<?php echo $form->labelEx($model,'branch_id'); ?>
+		<?php echo $form->dropDownList($model,'branch_id', $branches); ?>
+		<?php echo $form->error($model,'branch_id'); ?>
+	</div>    
+    
+	<div class="form-group">
 		<?php echo $form->labelEx($model,'product_id'); ?>
 		<?php echo $form->dropDownList($model,'product_id', $products); ?>
 		<?php echo $form->error($model,'product_id'); ?>
@@ -86,50 +92,3 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
-
-<script>
-$(document).ready(function(){
-    $('#Video_scope_id').on('change', function(){
-        $.ajax({
-            type: "POST",
-            url: '<?= Yii::app()->baseUrl; ?>/index.php/admin/video/getProducts/',
-            dataType: 'json',
-            data: {'scope_id':$('#Video_scope_id').val()},
-            success: function(data){
-                if (data){
-                    var opt = '';
-                    $.each(data, function(elem, ind){
-                        opt += '<option value="'+elem+'" >'+ind+'</option>';
-                    })
-                    $('#Video_product_id').html(opt);
-                    $('#Video_product_id').change();
-                } else {
-                    console.log('No products');
-                }
-            },
-            error: function(){
-                alert('Error change scope');
-            },
-        });        
-    });
-});    
-
-function loadVideosData(){
-    $.ajax({
-        type: "POST",
-        url: '<?=Yii::app()->baseUrl;?>/index.php/admin/video/loadVideosData/',
-        dataType: 'json',
-        data: {'source':'youtube', 'links': $('#loadVideos').val(), 'course_id': '<?=$model->id?>' },
-        success: function(data){
-            if (data.success){
-                $('#loadVideos').val('Loaded!');
-            } else {
-                alert(data.error);
-            }
-        },
-        error: function(){
-            alert('Error loadVideoData');
-        },
-    });
-}
-</script>

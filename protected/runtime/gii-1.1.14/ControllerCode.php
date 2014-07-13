@@ -1,6 +1,6 @@
 <?php
 return array (
   'template' => 'default',
-  'baseClass' => 'Controller',
+  'baseClass' => 'BranchController',
   'actions' => 'index',
 );

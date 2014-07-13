@@ -1,24 +1,32 @@
 <?php
 
 /**
- * This is the model class for table "picture".
+ * This is the model class for table "branch".
  *
- * The followings are the available columns in table 'picture':
+ * The followings are the available columns in table 'branch':
  * @property integer $id
- * @property string $type
- * @property integer $height
- * @property integer $width
- * @property string $link
- * @property string $alt
+ * @property string $alias
+ * @property string $title
+ * @property integer $scope_id
+ * @property string $created
+ * @property string $updated
+ * @property integer $active
+ * @property string $picture
+ * @property string $thumb
+ * @property string $ico
+ *
+ * The followings are the available model relations:
+ * @property Scope $scope
+ * @property Product[] $products
  */
-class Picture extends CActiveRecord
+class Branch extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'picture';
+		return 'branch';
 	}
 
 	/**
@@ -29,15 +37,13 @@ class Picture extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, height, width, object_id', 'numerical', 'integerOnly'=>true),
-			array('type', 'length', 'max'=>7),
-			array('link, alt', 'length', 'max'=>50),
-            array('created', 'length', 'max'=>20),
-            array('updated', 'length', 'max'=>20),
-            array('active', 'numerical', 'integerOnly'=>true),            
+			array('alias, title, scope_id', 'required'),
+			array('scope_id, active', 'numerical', 'integerOnly'=>true),
+			array('alias, title', 'length', 'max'=>50),
+			array('picture, thumb, ico', 'length', 'max'=>32),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, type, height, width, link, alt', 'safe', 'on'=>'search'),
+			array('id, alias, title, scope_id, created, updated, active, picture, thumb, ico', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,6 +55,7 @@ class Picture extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'scope' => array(self::BELONGS_TO, 'Scope', 'scope_id'),
 		);
 	}
 
@@ -59,15 +66,15 @@ class Picture extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-            'object_id' => 'Object',
-			'type' => 'Type',
-			'height' => 'Height',
-			'width' => 'Width',
-			'link' => 'Link',
-			'alt' => 'Alt',
-            'created' => 'Created',
-            'updated' => 'Updated',
-            'active' => 'Active',            
+			'alias' => 'Alias',
+			'title' => 'Title',
+			'scope_id' => 'Scope',
+			'created' => 'Created',
+			'updated' => 'Updated',
+			'active' => 'Active',
+			'picture' => 'Picture',
+			'thumb' => 'Thumb',
+			'ico' => 'Ico',
 		);
 	}
 
@@ -90,15 +97,15 @@ class Picture extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-        $criteria->compare('object_id',$this->object_id);
-		$criteria->compare('type',$this->type,true);
-		$criteria->compare('height',$this->height);
-		$criteria->compare('width',$this->width);
-		$criteria->compare('link',$this->link,true);
-		$criteria->compare('alt',$this->alt,true);
-        $criteria->compare('created',$this->created,true);
-        $criteria->compare('updated',$this->updated,true);
-        $criteria->compare('active',$this->active,true);        
+		$criteria->compare('alias',$this->alias,true);
+		$criteria->compare('title',$this->title,true);
+		$criteria->compare('scope_id',$this->scope_id);
+		$criteria->compare('created',$this->created,true);
+		$criteria->compare('updated',$this->updated,true);
+		$criteria->compare('active',$this->active);
+		$criteria->compare('picture',$this->picture,true);
+		$criteria->compare('thumb',$this->thumb,true);
+		$criteria->compare('ico',$this->ico,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -109,7 +116,7 @@ class Picture extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Picture the static model class
+	 * @return Branch the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -118,11 +125,25 @@ class Picture extends CActiveRecord
     
     protected function beforeSave()
     {
+        
         if (empty($this->created)){
           $this->created = date('Y-m-d H:i:s');
         }
         $this->updated = date('Y-m-d H:i:s');
-        
+
         return parent::beforeSave();
-    }
+    }    
+    
+    public static function getForDropDown($scope_id){
+        $crit = new CDbCriteria();
+        $crit->condition = 'scope_id = "'.$scope_id.'"';
+        $allModels = Branch::model()->findAll( $crit );
+   
+        $items = array();
+        foreach ($allModels as $model){
+            $items[$model->id] = $model->title;
+        }   
+        reset($items);        
+        return $items;
+    }    
 }

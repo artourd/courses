@@ -10,6 +10,7 @@
  */
 class Product extends CActiveRecord
 {
+    public $scope_id = null;    
 	/**
 	 * @return string the associated database table name
 	 */
@@ -26,7 +27,8 @@ class Product extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, scope_id', 'numerical', 'integerOnly'=>true),
+            array('branch_id', 'required'),
+			array('id, branch_id', 'numerical', 'integerOnly'=>true),
             array('alias', 'length', 'max'=>50),
 			array('title', 'length', 'max'=>50),
             array('created', 'length', 'max'=>20),
@@ -37,7 +39,7 @@ class Product extends CActiveRecord
             array('active', 'numerical', 'integerOnly'=>true),            
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, alias, scope_id, created, updated, active, picture, thumb, ico', 'safe', 'on'=>'search'),
+			array('id, title, alias, branch_id, created, updated, active, picture, thumb, ico', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,6 +52,7 @@ class Product extends CActiveRecord
 		// class name for the relations automatically generated below.
         return array(
             'scope'=>array(self::BELONGS_TO, 'Scope', 'scope_id'),
+            'branch'=>array(self::BELONGS_TO, 'Branch', 'branch_id'),
         );
     }
 
@@ -62,7 +65,7 @@ class Product extends CActiveRecord
 			'id' => 'ID',
 			'title' => 'Title',
             'alias' => 'alias',
-			'scope_id' => 'Scope',
+			'branch_id' => 'Branch',
             'created' => 'Created',
             'updated' => 'Updated',
             'active' => 'Active',
@@ -92,7 +95,7 @@ class Product extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('title',$this->title,true);
-		$criteria->compare('scope_id',$this->scope_id);
+		$criteria->compare('branch_id',$this->branch_id);
         $criteria->compare('alias',$this->alias,true);
         $criteria->compare('created',$this->created,true);
         $criteria->compare('updated',$this->updated,true);
@@ -126,4 +129,17 @@ class Product extends CActiveRecord
         
         return parent::beforeSave();
     }    
+    
+    public static function getForDropDown($branch_id){
+        $crit = new CDbCriteria();
+        $crit->condition = 'branch_id = "'.$branch_id.'"';
+        $allModels = Product::model()->findAll( $crit );
+   
+        $items = array();
+        foreach ($allModels as $model){
+            $items[$model->id] = $model->title;
+        }   
+        reset($items);        
+        return $items;
+    }      
 }

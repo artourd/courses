@@ -11,6 +11,7 @@
 class Course extends CActiveRecord
 {
     public $scope_id = null;
+    public $branch_id = null;  
 	/**
 	 * @return string the associated database table name
 	 */
@@ -27,6 +28,7 @@ class Course extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+            array('product_id', 'required'),
 			array('id, product_id', 'numerical', 'integerOnly'=>true),
             array('alias', 'length', 'max'=>50),
 			array('title', 'length', 'max'=>50),
@@ -127,5 +129,18 @@ class Course extends CActiveRecord
         $this->updated = date('Y-m-d H:i:s');
         
         return parent::beforeSave();
-    }      
+    }    
+    
+    public static function getForDropDown($product_id){
+        $crit = new CDbCriteria();
+        $crit->condition = 'product_id = "'.$product_id.'"';
+        $allModels = Course::model()->findAll( $crit );
+   
+        $items = array();
+        foreach ($allModels as $model){
+            $items[$model->id] = $model->title;
+        }   
+        reset($items);        
+        return $items;
+    }     
 }

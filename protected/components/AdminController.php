@@ -3,7 +3,7 @@
 abstract class AdminController extends Controller {
     public $modelName = 'admin';
     public $layout='//layouts/column2';
-    public $usePhotoProcess = true;
+    public $usePhotoProcess = false;
     
     /**
      * @return array action filters
@@ -27,7 +27,8 @@ abstract class AdminController extends Controller {
                 'users' => array('@'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'getVideoData', 'loadVideoData', 'getProducts', 'getCourses'),
+                'actions' => array('create', 'update', 'getVideoData', 'loadVideoData', 
+                    'getProducts', 'getBranches', 'getCourses', 'Catalog'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -44,6 +45,9 @@ abstract class AdminController extends Controller {
         $baseUrl = Yii::app()->baseUrl;
 		
 		$cs = Yii::app()->clientScript;
+        $cs->registerScript("baseVars", "var _baseUrl = '".Yii::app()->baseUrl."'; "
+                . " var _model = '".$this->modelName."'; ", CClientScript::POS_HEAD);
+        
 		$cs->registerScriptFile($baseUrl . '/js/jquery-2.1.1.min.js', CClientScript::POS_HEAD);
 		$cs->registerScriptFile($baseUrl . '/js/bootstrap.min.js', CClientScript::POS_HEAD);
         $cs->registerScriptFile($baseUrl . '/js/bootstrap-datetimepicker.min.js', CClientScript::POS_HEAD);
@@ -82,8 +86,9 @@ abstract class AdminController extends Controller {
         // $this->performAjaxValidation($model);
         if (isset($_POST[$this->modelName])) {
             $model->attributes = $_POST[$this->modelName];
-            
+
             if ($model->save()){
+
                 if ($this->usePhotoProcess){
                     Picture::writeImageFilenames($model);
                     $model->save();
@@ -115,9 +120,11 @@ abstract class AdminController extends Controller {
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
         if (isset($_POST[$this->modelName])) {
-            $_POST[$this->modelName]['picture'] = $model->picture;
-            $_POST[$this->modelName]['thumb'] = $model->thumb;
-            $_POST[$this->modelName]['ico'] = $model->ico;
+            if ($this->usePhotoProcess){
+                $_POST[$this->modelName]['picture'] = $model->picture;
+                $_POST[$this->modelName]['thumb'] = $model->thumb;
+                $_POST[$this->modelName]['ico'] = $model->ico;
+            }
             
             $model->attributes = $_POST[$this->modelName];
 
@@ -132,7 +139,7 @@ abstract class AdminController extends Controller {
 
         $data = array_merge(array('model' => $model), $this->initRelData($model));
         
-        $this->render('create', $data);
+        $this->render('update', $data);
     }
 
     /**
@@ -258,40 +265,58 @@ abstract class AdminController extends Controller {
         }
     }
     
-    function actionGetProducts(){
+    function actionGetBranches(){
         $scope_id = Yii::app()->request->getParam('scope_id');
         
-        $pcrit = null;
+        $crit = null;
         if ($scope_id){
-            $pcrit = new CDbCriteria();
-            $pcrit->condition = 'scope_id = "'.$scope_id.'"';
+            $crit = new CDbCriteria();
+            $crit->condition = 'scope_id = "'.$scope_id.'"';
         }
-        $productsObjects = Product::model()->findAll( $pcrit );
+        $objects = Branch::model()->findAll( $crit );
 
-        $products = array();
-        foreach ($productsObjects as $obj){
-            $products[$obj->id] = $obj->title;
+        $items = array();
+        foreach ($objects as $obj){
+            $items[$obj->id] = $obj->title;
         }
         
-        echo CJSON::encode($products);
+        echo CJSON::encode($items);
+    }   
+    
+    function actionGetProducts(){
+        $branch_id = Yii::app()->request->getParam('branch_id');
+        
+        $crit = null;
+        if ($branch_id){
+            $crit = new CDbCriteria();
+            $crit->condition = 'branch_id = "'.$branch_id.'"';
+        }
+        $objects = Product::model()->findAll( $crit );
+
+        $items = array();
+        foreach ($objects as $obj){
+            $items[$obj->id] = $obj->title;
+        }
+        
+        echo CJSON::encode($items);
     }
     
     function actionGetCourses(){
         $product_id = Yii::app()->request->getParam('product_id');
-                
-        $ccrit = null;
-        if ($product_id){        
-            $ccrit = new CDbCriteria();
-            $ccrit->condition = 'product_id = "'.$product_id.'"';
+        
+        $crit = null;
+        if ($product_id){
+            $crit = new CDbCriteria();
+            $crit->condition = 'product_id = "'.$product_id.'"';
         }
-        $coursesObjects = Course::model()->findAll( $ccrit );
+        $objects = Course::model()->findAll( $crit );
+
+        $items = array();
+        foreach ($objects as $obj){
+            $items[$obj->id] = $obj->title;
+        }
         
-        $courses = array();
-        foreach ($coursesObjects as $obj){
-          $courses[$obj->id] = $obj->title;
-        }  
-        
-        echo CJSON::encode($courses);
+        echo CJSON::encode($items);
     }
     
 }

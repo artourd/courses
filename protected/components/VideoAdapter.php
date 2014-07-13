@@ -1,13 +1,12 @@
 <?php
 class VideoAdapter {
-    private static $DEVELOPER_KEY = 'AIzaSyCN82x2ZgblGdNlFCS3awVRg635bkq85I0'; //youtube
+    //private static $DEVELOPER_KEY = 'AIzaSyCN82x2ZgblGdNlFCS3awVRg635bkq85I0'; //youtube
 
     public static function getData($source, $link) {
         switch ($source) {
             case 'youtube':
                 return self::getYoutubeData($link);
                 break;
-
             default:
                 break;
         }
@@ -19,7 +18,7 @@ class VideoAdapter {
         require_once 'Google/Service/YouTube.php';
 
         $client = new Google_Client();
-        $client->setDeveloperKey(self::$DEVELOPER_KEY);
+        $client->setDeveloperKey(Settings::get('google_api_key'));
 
         $youtube = new Google_Service_YouTube($client);
         $error = null;

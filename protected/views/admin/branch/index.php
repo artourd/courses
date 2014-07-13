@@ -1,18 +1,18 @@
 <?php
-/* @var $this PictureController */
+/* @var $this BranchController */
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Pictures',
+	'Branches',
 );
 
 $this->menu=array(
-	array('label'=>'Create Picture', 'url'=>array('create')),
-	array('label'=>'Manage Picture', 'url'=>array('admin')),
+	array('label'=>'Create Branch', 'url'=>array('create')),
+	array('label'=>'Manage Branch', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Pictures</h1>
+<h1>Branches</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

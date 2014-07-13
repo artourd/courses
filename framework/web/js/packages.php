@@ -12,7 +12,7 @@
  */
 
 return array(
-	'jquery'=>array(
+	/*'jquery'=>array(
 		'js'=>array(YII_DEBUG ? 'jquery.js' : 'jquery.min.js'),
 	),
 	'yii'=>array(
@@ -77,5 +77,5 @@ return array(
 	),
 	'punycode'=>array(
 		'js'=>array(YII_DEBUG ? 'punycode.js' : 'punycode.min.js'),
-	),
+	),*/
 );

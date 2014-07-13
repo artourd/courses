@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Video', 'url'=>array('index')),
+	//array('label'=>'List Video', 'url'=>array('index')),
 	array('label'=>'Create Video', 'url'=>array('create')),
 	array('label'=>'View Video', 'url'=>array('view', 'id'=>$model->id)),
 	array('label'=>'Manage Video', 'url'=>array('admin')),
@@ -18,4 +18,4 @@ $this->menu=array(
 
 <h1>Update Video <?php echo $model->id; ?></h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model, 'courses' => $courses)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model, 'courses' => $courses, 'scopes' => $scopes, 'branches' => $branches, 'products' => $products)); ?>

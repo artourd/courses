@@ -10,7 +10,10 @@
  */
 class Settings extends CActiveRecord
 {
-	/**
+    public static $_setttings = array();
+
+
+    /**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
@@ -26,7 +29,6 @@ class Settings extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, name, value', 'required'),
 			array('id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>50),
 			array('value', 'length', 'max'=>250),
@@ -96,4 +98,14 @@ class Settings extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+    
+    public static function get($name){
+        if (!self::$_setttings){
+            $setts = Settings::model()->findAll();
+            foreach ($setts as $sett){
+                self::$_setttings[$sett->name] = $sett->value;
+            }
+        }
+        return self::$_setttings[$name] ? self::$_setttings[$name] : null;
+    }
 }

@@ -1,0 +1,50 @@
+.path{
+    background-color: #eee;
+    font-size: 16px;
+    color: #666666;
+    padding: 2px;
+}
+.buttons{
+    margin: 4px 0px;
+}
+.buttons a{
+    padding: 0px 2px;
+    margin: 0px 5px;    
+    text-decoration: none;
+}
+.buttons a img{
+    margin-top: 2px;
+}
+.buttons input{
+    height: 20px;
+}
+.folders{
+    background-color: #ddddff;
+    font-size: 18px;
+    padding: 2px;
+    margin-bottom: 4px;
+}
+.folders a{
+    text-decoration: none;
+    margin: 4px 6px;
+}
+.folders a.dir{
+    padding-left: 20px;
+    background: url("/courses/css/img/folder.gif") no-repeat scroll 0px 4px rgba(0, 0, 0, 0);
+}
+.folders a.up{
+    padding-left: 20px;
+    background: url("/courses/css/img/folderopen.gif") no-repeat scroll 0px 4px rgba(0, 0, 0, 0);
+}
+.folders a.home{
+    /*padding-left: 20px;
+    background: url("/courses/css/img/folderopen.gif") no-repeat scroll 0px 4px rgba(0, 0, 0, 0);*/
+}
+.files{
+    color: #666666;
+    font-size: 16px;
+}
+
+.clear{
+    clear: both;
+}

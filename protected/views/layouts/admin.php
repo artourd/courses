@@ -12,21 +12,30 @@
 <div class="container" id="page">
 
 	<div id="header">
-		<div id="logo">Admin Panel</div>
+        <div id="logo">Admin Panel 
+            <?php if (Yii::app()->user->isGuest): ?>
+                <a href="/site/login" style="color: blue">login</a>
+            <?php else: ?>
+            <span style="color: #aaa; font-size: 12px">(<?=Yii::app()->user->name;?>      
+                <a href="/site/logout" >logout</a>)
+            </span>
+            <?php endif; ?>
+        </div>
 	</div><!-- header -->
     
-    <div>    
-        User IP: <?php echo Yii::app()->request->userHostAddress;?><br>
-        Server IP: <?php echo gethostname();?>
-    </div>
-    
 	<div id="mainmenu">
+
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-                array('label'=>'Admin', 'url'=>array('/admin/')),
-				array('label'=>'Home', 'url'=>array('/site/index')),                
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),                
+                array('label'=>'Scope', 'url'=>array('/admin/scope/admin/')),
+                array('label'=>'Branch', 'url'=>array('/admin/branch/admin/')),
+                array('label'=>'Product', 'url'=>array('/admin/product/admin/')),
+                array('label'=>'Course', 'url'=>array('/admin/course/admin/')),
+                array('label'=>'Video', 'url'=>array('/admin/video/admin/')),
+                array('label'=>'Article', 'url'=>array('/admin/article/admin/')),                
+                array('label'=>'User', 'url'=>array('/admin/user/admin/')),
+                array('label'=>'Seo', 'url'=>array('/admin/seo/admin/')),
+                array('label'=>'Settings', 'url'=>array('/admin/settings/admin/')),
 			),
 		)); ?>
 	</div><!-- mainmenu -->

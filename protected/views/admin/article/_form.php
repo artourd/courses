@@ -58,6 +58,24 @@
 		<?php echo $form->textField($model,'author_id',array('size'=>50,'maxlength'=>50)); ?>
 		<?php echo $form->error($model,'author_id'); ?>
 	</div>
+    
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'scope_id'); ?>
+		<?php echo $form->dropDownList($model,'scope_id', $scopes); ?>
+		<?php echo $form->error($model,'scope_id'); ?>
+	</div>    
+    
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'branch_id'); ?>
+		<?php echo $form->dropDownList($model,'branch_id', $branches); ?>
+		<?php echo $form->error($model,'branch_id'); ?>
+	</div>    
+    
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'product_id'); ?>
+		<?php echo $form->dropDownList($model,'product_id', $products); ?>
+		<?php echo $form->error($model,'product_id'); ?>
+	</div>    
 
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'meta_desc'); ?>
@@ -113,33 +131,24 @@
             {title: 'Table styles'},
             {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
         ],
-        file_browser_callback : 'myFileBrowser'
+        file_browser_callback : function(field_name, url, type, win) { 
+            //win.document.getElementById(field_name).value = 'my browser value'; 
+            myFileBrowser (field_name, url, type, win);
+        }
+
     });
     
 function myFileBrowser (field_name, url, type, win) {
 
-     alert("Field_Name: " + field_name + "nURL: " + url + "nType: " + type + "nWin: " + win); // debug/testing
+    //alert("Field_Name: " + field_name + "nURL: " + url + "nType: " + type + "nWin: " + win); // debug/testing
 
-    /* If you work with sessions in PHP and your client doesn't accept cookies you might need to carry
-       the session name and session ID in the request string (can look like this: "?PHPSESSID=88p0n70s9dsknra96qhuk6etm5").
-       These lines of code extract the necessary parameters and add them back to the filebrowser URL again. */
-
-    var cmsURL = window.location.toString();    // script URL - use an absolute path!
-    if (cmsURL.indexOf("?") < 0) {
-        //add the type as the only query parameter
-        cmsURL = cmsURL + "?type=" + type;
-    }
-    else {
-        //add the type as an additional query parameter
-        // (PHP session ID is now included if there is one at all)
-        cmsURL = cmsURL + "&type=" + type;
-    }
+    var cmsURL = '<?=Yii::app()->baseUrl;?>/admin/file';
 
     tinyMCE.activeEditor.windowManager.open({
         file : cmsURL,
         title : 'My File Browser',
-        width : 420,  // Your dimensions may differ - toy around with them!
-        height : 400,
+        width : 560,  // Your dimensions may differ - toy around with them!
+        height : 420,
         resizable : "yes",
         inline : "yes",  // This parameter only has an effect if you use the inlinepopups plugin!
         close_previous : "no"

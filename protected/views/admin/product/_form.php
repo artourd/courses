@@ -36,6 +36,12 @@
 		<?php echo $form->labelEx($model,'scope_id'); ?>
 		<?php echo $form->dropDownList($model,'scope_id', $scopes); ?>
 		<?php echo $form->error($model,'scope_id'); ?>
+	</div>    
+    
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'branch_id'); ?>
+		<?php echo $form->dropDownList($model,'branch_id', $branches); ?>
+		<?php echo $form->error($model,'branch_id'); ?>
 	</div>
 
 	<div class="form-group">
