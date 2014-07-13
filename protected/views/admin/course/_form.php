@@ -103,24 +103,3 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
-<script>
-function uploadVideoData(){
-    $('#uploadVideoResult').html('Uploading...');
-    $.ajax({
-        type: "POST",
-        url: '<?=Yii::app()->baseUrl;?>/admin/video/uploadVideoData/',
-        dataType: 'json',
-        data: {'source':'youtube', 'course_id': $('#course_id').val(), 'links': $('#videoLinks').val(), 'source': 'youtube'},
-        success: function(data){
-            if (data.success == true){
-                $('#uploadVideoResult').html('Success, uploaded: '+data.count);
-            } else {
-                $('#uploadVideoResult').html('Error: '+data.error);
-            }
-        },
-        error: function(){
-            $('#uploadVideoResult').html('Error in request');
-        },
-    });
-}  
-</script>

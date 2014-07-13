@@ -42,20 +42,21 @@ abstract class AdminController extends Controller {
 
     public function init() {
         $baseUrl = Yii::app()->baseUrl;
-		
+		$pos = CClientScript::POS_END;
+        
 		$cs = Yii::app()->clientScript;
         $cs->registerScript("baseVars", "var _baseUrl = '".Yii::app()->baseUrl."'; "
-                . " var _model = '".$this->modelName."'; ", CClientScript::POS_HEAD);
+                . " var _model = '".$this->modelName."'; ", $pos);
         
-		$cs->registerScriptFile($baseUrl . '/js/jquery-2.1.1.min.js', CClientScript::POS_HEAD);
-		$cs->registerScriptFile($baseUrl . '/js/bootstrap.min.js', CClientScript::POS_HEAD);
-        $cs->registerScriptFile($baseUrl . '/js/bootstrap-datetimepicker.min.js', CClientScript::POS_HEAD);
-        $cs->registerScriptFile($baseUrl . '/js/tinymce/tinymce.min.js', CClientScript::POS_HEAD);
-        //$cs->registerScriptFile($baseUrl . '/js/ckeditor/ckeditor.js', CClientScript::POS_HEAD);
-        //$cs->registerScriptFile($baseUrl . '/js/ckeditor/adapter-jquery.js', CClientScript::POS_HEAD);
-        $cs->registerScriptFile($baseUrl . '/js/jquery.ba-bbq.js', CClientScript::POS_HEAD);
+		$cs->registerScriptFile($baseUrl . '/js/jquery-2.1.1.min.js', $pos);
+		$cs->registerScriptFile($baseUrl . '/js/bootstrap.min.js', $pos);
+        $cs->registerScriptFile($baseUrl . '/js/bootstrap-datetimepicker.min.js', $pos);
+        $cs->registerScriptFile($baseUrl . '/js/tinymce/tinymce.min.js', $pos);
+        //$cs->registerScriptFile($baseUrl . '/js/ckeditor/ckeditor.js', $pos);
+        //$cs->registerScriptFile($baseUrl . '/js/ckeditor/adapter-jquery.js', $pos);
+        $cs->registerScriptFile($baseUrl . '/js/jquery.ba-bbq.js', $pos);
         
-        $cs->registerScriptFile($baseUrl . '/js/admin.js', CClientScript::POS_HEAD);
+        $cs->registerScriptFile($baseUrl . '/js/admin.js', $pos);
         
         $cs->registerCssFile($baseUrl . '/css/bootstrap.css');
         $cs->registerCssFile($baseUrl . '/css/bootstrap-theme.css');
