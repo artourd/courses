@@ -19,7 +19,7 @@
 class Article extends CActiveRecord
 {
     public $scope_id = null;
-    public $branch_id = null;      
+ 
 	/**
 	 * @return string the associated database table name
 	 */
@@ -39,10 +39,9 @@ class Article extends CActiveRecord
 			array('product_id, alias, title, content, published', 'required'),
 			array('id', 'numerical', 'integerOnly'=>true),
 			array('alias, title, short, author_id', 'length', 'max'=>50),
-			array('meta_desc, meta_keys', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, alias, product_id, title, short, content, created, updated, published, author_id, meta_desc, meta_keys, order', 'safe', 'on'=>'search'),
+			array('id, alias, product_id, title, short, content, created, updated, published, author_id, order', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,8 +75,6 @@ class Article extends CActiveRecord
 			'published' => 'Published',
 			'author_id' => 'Author',
             'ord' => 'Order',
-			'meta_desc' => 'Meta Desc',
-			'meta_keys' => 'Meta Keys',
 		);
 	}
 
@@ -110,8 +107,6 @@ class Article extends CActiveRecord
 		$criteria->compare('published',$this->published,true);
 		$criteria->compare('author_id',$this->author_id,true);
         $criteria->compare('order',$this->ord,true);
-		$criteria->compare('meta_desc',$this->meta_desc,true);
-		$criteria->compare('meta_keys',$this->meta_keys,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -138,4 +133,17 @@ class Article extends CActiveRecord
         
         return parent::beforeSave();
     }    
+    
+    public static function getForDropDown($product_id){
+        $crit = new CDbCriteria();
+        $crit->condition = 'product_id = "'.$product_id.'"';
+        $allModels = self::model()->findAll( $crit );
+   
+        $items = array();
+        foreach ($allModels as $model){
+            $items[$model->id] = $model->title;
+        }   
+        reset($items);        
+        return $items;
+    }        
 }

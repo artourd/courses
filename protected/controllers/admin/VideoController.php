@@ -13,7 +13,7 @@ class VideoController extends AdminController
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array('create', 'update', 'getVideoData', 'UploadVideoData', 
-                    'getProducts', 'getBranches', 'getCourses'),
+                    'getProducts', 'getCourses'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -27,32 +27,25 @@ class VideoController extends AdminController
     }    
     
     protected function initRelData($model) {    
-        $course = Course::model()->findByPk($model->course_id);
-        $product_id = $course ? $course->product_id : null;
+        $article = Course::model()->findByPk($model->article_id);
+        $product_id = $article ? $article->product_id : null;
         $product = Product::model()->findByPk($product_id);
-        $branch_id = $product ? $product->branch_id : null;
-        $branch = Branch::model()->findByPk($branch_id);
-        $scope_id = $branch ? $branch->scope_id : null;
+        $scope_id = $product ? $product->scope_id : null;
                 
         //scope
         $scopes = Scope::getForDropDown();        
         $model->scope_id = ($scope_id ? $scope_id : key($scopes));
                 
-        //branch
-        $branches = Branch::getForDropDown($model->scope_id);
-        $model->branch_id = ($branch_id ? $branch_id : key($branches));
-        
         //product
-        $products = Product::getForDropDown($model->branch_id);
+        $products = Product::getForDropDown($model->scope_id);
         $model->product_id = ($product_id ? $product_id : key($products));
   
-        $courses = Course::getForDropDown($model->product_id);
+        $articles = Article::getForDropDown($model->product_id);
         
         return array(
             'scopes' => $scopes,
-            'branches' => $branches,
             'products' => $products,
-            'courses' => $courses,
+            'articles' => $articles,
         );
     }   
     
@@ -73,12 +66,12 @@ class VideoController extends AdminController
     }
     
     function actionUploadVideoData(){
-        $course_id = Yii::app()->request->getParam('course_id');
+        $article_id = Yii::app()->request->getParam('article_id');
         $linkStr = Yii::app()->request->getParam('links');
         $source = Yii::app()->request->getParam('source');
         
-        if (!$course_id){
-            echo CJSON::encode(array('success' => false, 'error' => 'No course_id'));
+        if (!$article_id){
+            echo CJSON::encode(array('success' => false, 'error' => 'No article_id'));
             return false;            
         }
         if (!$linkStr){
@@ -88,15 +81,15 @@ class VideoController extends AdminController
 
         $links = explode("\n", $linkStr);
         
-        $maxOrd = Video::getMaxOrder($course_id);
+        $maxOrd = Video::getMaxOrder($article_id);
         $i = 0;
         foreach($links as $link){
             $linkId = VideoAdapter::linkToId($link);
-            if (!Video::existByAlias($linkId, $course_id)){
+            if (!Video::existByAlias($linkId, $article_id)){
                 $result = VideoAdapter::link2data($source, $link);
                 if ($result['success']){
                     $model = new Video();
-                    $model->course_id = $course_id;
+                    $model->article_id = $article_id;
                     $model->link = $link;
                     $model->alias = $linkId;
                     $model->title = $result['title'];

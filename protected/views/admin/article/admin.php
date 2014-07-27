@@ -70,8 +70,6 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
             'value' => 'date("d.m.Y H:i:s", strtotime($data["updated"]))',
         ),        
 		'author_id',
-		'meta_desc',
-		'meta_keys',
 		array(
 			'class'=>'CButtonColumn',
 		),

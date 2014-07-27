@@ -5,7 +5,7 @@
  *
  * The followings are the available columns in table 'video':
  * @property integer $id
- * @property integer $course_id
+ * @property integer $article_id
  * @property string $link
  * @property string $title
  * @property string $desc
@@ -13,7 +13,6 @@
 class Video extends CActiveRecord
 {
     public $scope_id = null;
-    public $branch_id = null;    
     public $product_id = null;
     
 	/**
@@ -32,8 +31,8 @@ class Video extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-            array('course_id', 'required'),
-			array('id, course_id', 'numerical', 'integerOnly'=>true),
+            array('article_id', 'required'),
+			array('id, article_id', 'numerical', 'integerOnly'=>true),
 			array('link, desc', 'length', 'max'=>250),
             array('alias', 'length', 'max'=>50),
 			array('title', 'length', 'max'=>100),
@@ -46,7 +45,7 @@ class Video extends CActiveRecord
             array('active', 'numerical', 'integerOnly'=>true),            
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, course_id, link, title, alias, desc, created, updated, active, picture, thumb, ico, order ', 'safe', 'on'=>'search'),
+			array('id, article_id, link, title, alias, desc, created, updated, active, picture, thumb, ico, order ', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,7 +57,7 @@ class Video extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-            'course'=>array(self::BELONGS_TO, 'Course', 'course_id'),
+            'article'=>array(self::BELONGS_TO, 'Article', 'article_id'),
 		);
 	}
 
@@ -71,7 +70,7 @@ class Video extends CActiveRecord
 			'id' => 'ID',
 			'scope_id' => 'Scope',
             'product_id' => 'Product',
-            'course_id' => 'Course',
+            'article_id' => 'Article',
 			'link' => 'Link',
 			'title' => 'Title',
             'alias' => 'alias',
@@ -105,7 +104,7 @@ class Video extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('course_id',$this->course_id);
+		$criteria->compare('article_id',$this->article_id);
 		$criteria->compare('link',$this->link,true);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('desc',$this->desc,true);
@@ -144,11 +143,11 @@ class Video extends CActiveRecord
         return parent::beforeSave();
     }     
     
-    public static function existByAlias($alias, $course_id = null){
+    public static function existByAlias($alias, $article_id = null){
         $crit = new CDbCriteria();
-        if ($course_id){
-            $crit->condition = 'course_id = :course_id AND alias = :alias';
-            $crit->params = array(':course_id' => $course_id, ':alias' => $alias);
+        if ($article_id){
+            $crit->condition = 'article_id = :article_id AND alias = :alias';
+            $crit->params = array(':article_id' => $article_id, ':alias' => $alias);
         } else {
             $crit->condition = 'alias = :alias';
             $crit->params = array(':alias' => $alias);
@@ -156,9 +155,9 @@ class Video extends CActiveRecord
         return (bool) Video::model()->count($crit);
     }
 
-    public static function getMaxOrder($course_id){
-        return Yii::app()->db->createCommand("SELECT MAX(ord) FROM video WHERE course_id = :course_id")
-            ->bindValue(':course_id', $course_id)
+    public static function getMaxOrder($article_id){
+        return Yii::app()->db->createCommand("SELECT MAX(ord) FROM video WHERE article_id = :article_id")
+            ->bindValue(':article_id', $article_id)
             ->queryScalar();
     }
 }

@@ -17,8 +17,8 @@
 	</div>
 
 	<div class="form-group">
-		<?php echo $form->label($model,'course_id'); ?>
-		<?php echo $form->textField($model,'course_id'); ?>
+		<?php echo $form->label($model,'article_id'); ?>
+		<?php echo $form->textField($model,'article_id'); ?>
 	</div>
 
 	<div class="form-group">

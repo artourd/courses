@@ -39,12 +39,6 @@
 	</div>    
     
 	<div class="form-group">
-		<?php echo $form->labelEx($model,'branch_id'); ?>
-		<?php echo $form->dropDownList($model,'branch_id', $branches); ?>
-		<?php echo $form->error($model,'branch_id'); ?>
-	</div>    
-    
-	<div class="form-group">
 		<?php echo $form->labelEx($model,'product_id'); ?>
 		<?php echo $form->dropDownList($model,'product_id', $products); ?>
 		<?php echo $form->error($model,'product_id'); ?>

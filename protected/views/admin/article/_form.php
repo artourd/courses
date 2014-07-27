@@ -66,29 +66,24 @@
 	</div>    
     
 	<div class="form-group">
-		<?php echo $form->labelEx($model,'branch_id'); ?>
-		<?php echo $form->dropDownList($model,'branch_id', $branches); ?>
-		<?php echo $form->error($model,'branch_id'); ?>
-	</div>    
-    
-	<div class="form-group">
 		<?php echo $form->labelEx($model,'product_id'); ?>
 		<?php echo $form->dropDownList($model,'product_id', $products); ?>
 		<?php echo $form->error($model,'product_id'); ?>
 	</div>    
-
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'meta_desc'); ?>
-		<?php echo $form->textField($model,'meta_desc',array('size'=>50,'maxlength'=>100)); ?>
-		<?php echo $form->error($model,'meta_desc'); ?>
-	</div>
-
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'meta_keys'); ?>
-		<?php echo $form->textField($model,'meta_keys',array('size'=>50,'maxlength'=>100)); ?>
-		<?php echo $form->error($model,'meta_keys'); ?>
-	</div>
-
+    
+    <?php if ($model->id): ?>
+    <input type="hidden" id="article_id" name="course_id" value="<?=$model->id?>">
+        
+    <button type="button" onclick="uploadVideoData();" class="btn btn-info">Load from Youtube</button>
+    <span id="uploadVideoResult" style="margin-left: 10px"></span>
+    <br>   <br>     
+    <textarea id="videoLinks" class="form-control" cols="80" rows="8"></textarea>
+    <br>
+    <?php endif; ?>  
+    
+    
+    <?php $this->widget('application.widgets.tag_add.WTagAdd', array('tags' => $tags)); ?>
+    
 	<div class="form-group buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

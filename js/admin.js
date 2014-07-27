@@ -1,43 +1,13 @@
 $(document).ready(function(){
-    $('#'+_model+'_scope_id').on('change', function() {
-        if ($('#'+_model+'_branch_id').length) {
-            $('#'+_model+'_branch_id').html('');
-            if ($('#'+_model+'_scope_id').val()){
-                $.ajax({
-                    type: "POST",
-                    url: _baseUrl + '/admin/scope/getBranches/',
-                    dataType: 'json',
-                    data: {'scope_id': $('#'+_model+'_scope_id').val()},
-                    success: function(data) {
-                        var opt = '';
-                        if (data) {                        
-                            $.each(data, function(elem, ind) {
-                                opt += '<option value="' + elem + '" >' + ind + '</option>';
-                            })
-                        } else {
-                            console.log('No branches');
-                        }
-                        $('#'+_model+'_branch_id').html(opt);
-                        $('#'+_model+'_branch_id').change();                    
-                    },
-                    error: function() {
-                        alert('Error change scope');
-                    },
-                });
-            }
-        }
-    });
-    
-    
-    $('#'+_model+'_branch_id').on('change', function(){
+    $('#'+_model+'_scope_id').on('change', function(){
         if ($('#'+_model+'_product_id').length) {
             $('#'+_model+'_product_id').html('');
-            if ($('#'+_model+'_branch_id').val()){            
+            if ($('#'+_model+'_scope_id').val()){            
                 $.ajax({
                     type: "POST",
                     url: _baseUrl + '/admin/scope/getProducts/',
                     dataType: 'json',
-                    data: {'branch_id': $('#'+_model+'_branch_id').val()},
+                    data: {'scope_id': $('#'+_model+'_scope_id').val()},
                     success: function(data) {
                         var opt = '';
                         if (data) {
@@ -59,8 +29,8 @@ $(document).ready(function(){
     });   
 
     $('#'+_model+'_product_id').on('change', function(){
-        if ($('#'+_model+'_course_id').length) {
-            $('#'+_model+'_course_id').html('');
+        if ($('#'+_model+'_article_id').length) {
+            $('#'+_model+'_article_id').html('');
             if ($('#'+_model+'_product_id').val()){
                 $.ajax({
                     type: "POST",
@@ -74,9 +44,9 @@ $(document).ready(function(){
                                 opt += '<option value="' + elem + '" >' + ind + '</option>';
                             })
                         } else {
-                            console.log('No courses');
+                            console.log('No articles');
                         }
-                        $('#'+_model+'_course_id').html(opt);
+                        $('#'+_model+'_article_id').html(opt);
                     },
                     error: function() {
                         alert('Error change product');
@@ -116,16 +86,17 @@ $(document).ready(function(){
         });*/
 
         tinymce.init({
-            selector: "textarea",
+            selector: "#Article_content",
             theme: "modern",
             height: 300,
             plugins: [
-                 "advlist autolink link image lists charmap hr anchor pagebreak spellchecker",
+                 "advlist autolink link image lists charmap hr anchor pagebreak ",
                  "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                 "save table contextmenu directionality emoticons template paste textcolor"
+                 "save table contextmenu directionality emoticons template paste textcolor code sh4tinymce preview"
            ],
 
-           toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media fullpage | forecolor backcolor emoticons", 
+           toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | "+
+                "bullist numlist outdent indent | link image media fullpage | forecolor backcolor emoticons | sh4tinymce preview", 
            style_formats: [
                 {title: 'Bold text', inline: 'b'},
                 {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
@@ -135,15 +106,89 @@ $(document).ready(function(){
                 {title: 'Table styles'},
                 {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
             ],
+            content_css: _baseUrl + '/css/bootstrap.css, ' + _baseUrl + '/css/bootstrap-theme.css ',
             file_browser_callback : function(field_name, url, type, win) { 
                 //win.document.getElementById(field_name).value = 'my browser value'; 
                 myFileBrowser (field_name, url, type, win);
             }
 
         });        
+        
+        $('.mce-ico.mce-i-preview').on('click', function(e) {
+            SyntaxHighlighter.highlight();
+        });        
     }
     
-}); //end document ready   
+    //TAGS
+    var tags = getTagData();
+    if (tags){
+        $.each(tags, function( index, tag ) {
+            createTagElem(tag);
+        });
+    }
+    
+    $('#tags .add').on('click', function(){
+        var tag = $('#tags .new').val();
+        $('#tags .new').val('');
+        if (tag && !findTagCopy(tag)){
+            createTagElem(tag);                        
+            addTagData(tag);
+        }
+    });
+    
+    $('#tags .new').on('keydown', function(e){
+        if (e.keyCode == 13){
+            $('#tags .add').click();
+            return false;
+        }
+    });
+    
+    $('#tags').on('click', '.del', function(){
+        var delTag = $(this).prev().html();
+        delTagData(delTag);
+        $(this).parent().remove();
+    });
+    
+}); //end document ready 
+/////////////
+
+//TAGS
+function createTagElem(tag){
+    if (tag){
+        $('#tags .new').before("<span><span>"+tag+ "</span>"+
+                " <a href='#' class='del' onclick='return false'>[x]</a></span>&nbsp; ");                
+    }
+}
+
+function getTagData(){
+    var tagStr = $('#tags .tag_data').val();
+    return tags = tagStr ? tagStr.split(';') : new Array();
+}
+
+function findTagCopy(tag){
+    var tags = getTagData();
+    var pos = tags.indexOf(tag); 
+    return (pos > -1);
+}
+
+function addTagData(newTag){
+    var tags = getTagData();
+    tags.push(newTag);
+    var tagStr = tags.join(';');
+    $('#tags .tag_data').val(tagStr);
+}
+
+function delTagData(delTag){
+    var tags = getTagData();
+    var pos = tags.indexOf(delTag);    
+    if (pos > -1){
+        tags.splice(pos, 1);
+    }
+    var tagStr = tags.join(';');
+    $('#tags .tag_data').val(tagStr);    
+}
+// end TAGS
+
 
 function deleteImg(imgtype, model){
     $("#del"+imgtype).val(1);
@@ -157,7 +202,7 @@ function loadVideosData(){
         type: "POST",
         url: _baseUrl + '/index.php/admin/video/loadVideosData/',
         dataType: 'json',
-        data: {'source':'youtube', 'links': $('#loadVideos').val(), 'course_id': '<?=$model->id?>' },
+        data: {'source':'youtube', 'links': $('#loadVideos').val(), 'article_id': '<?=$model->id?>' },
         success: function(data){
             if (data.success){
                 $('#loadVideos').val('Loaded!');
@@ -198,7 +243,7 @@ function uploadVideoData(){
         type: "POST",
         url: _baseUrl + '/admin/video/uploadVideoData/',
         dataType: 'json',
-        data: {'source':'youtube', 'course_id': $('#course_id').val(), 'links': $('#videoLinks').val(), 'source': 'youtube'},
+        data: {'source':'youtube', 'article_id': $('#article_id').val(), 'links': $('#videoLinks').val(), 'source': 'youtube'},
         success: function(data){
             if (data.success == true){
                 $('#uploadVideoResult').html('Success, uploaded: '+data.count);

@@ -110,4 +110,15 @@ class Seo extends CActiveRecord
         
         return parent::beforeSave();
     }    
+    
+    public static function process($link){
+        $link = Yii::app()->request->requestUri;
+        $linkArr = explode('/', $link);
+        
+        
+    }
+    
+    public static function findRule($rule){
+        return Seo::model()->findByAttributes(array('rule' => $rule));
+    }
 }

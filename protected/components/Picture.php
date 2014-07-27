@@ -4,8 +4,8 @@ class Picture
 {
     public static $imgParams = array(
         'pic' => array('width' => 400, 'height' => 400),
-        'thumb' => array('width' => 160, 'height' => 160, 'crop' => true),
-        'ico' => array('width' => 40, 'height' => 40, 'crop' => true)
+        'thumb' => array('width' => 160, 'height' => 160, 'crop' => false),
+        'ico' => array('width' => 40, 'height' => 40, 'crop' => false)
     );    
     
     /**
@@ -42,7 +42,7 @@ class Picture
      */
     static function getImagePath($modelName, $modelId, $type, $name){
         if ($type == 'picture') $type = 'pic';
-        return Yii::app()->request->baseUrl."/images" . '/'.$modelName.'/'.$modelId.'/'.$type.'/'.$name;
+        return Yii::app()->request->baseUrl."/images" . '/'.strtolower($modelName).'/'.$modelId.'/'.$type.'/'.$name;
     }
     
     /**
@@ -231,13 +231,13 @@ class Picture
             $handle->image_ratio_crop = (empty($imgData['crop']) ? false : $imgData['crop']);
 
             //маленькие фото не увеличиваются, а заполняются бекграундом
-            if (($handle->image_dst_x < $imgData['width']) && ($handle->image_dst_y < $imgData['height'])) {
+            /*if (($handle->image_dst_x < $imgData['width']) && ($handle->image_dst_y < $imgData['height'])) {
                 $imgx = floor(($imgData['width'] - $handle->image_dst_x) / 2);
                 $imgy = floor(($imgData['height'] - $handle->image_dst_y) / 2);
 
                 $handle->image_resize = false;
                 $handle->image_crop = '-' . $imgy . 'px -' . $imgx . 'px';
-            }
+            }*/
             $handle->process($path.$imgType.DIRECTORY_SEPARATOR);
             if(!$handle->processed) {
                 throw new CException('image uploader process error: '.$handle->error);

@@ -1,6 +1,6 @@
 <?php
 
-class BranchController extends BranchController
+class TagController extends TagController
 {
 	public function actionIndex()
 	{

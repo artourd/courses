@@ -27,21 +27,15 @@
 	</div>
     
 	<div class="form-group row">
-		<?php echo $form->labelEx($model,'branch_id'); ?>
-		<?php echo $form->dropDownList($model,'branch_id', $branches); ?>
-		<?php echo $form->error($model,'branch_id'); ?>
-	</div>    
-    
-	<div class="form-group row">
 		<?php echo $form->labelEx($model,'product_id'); ?>
 		<?php echo $form->dropDownList($model,'product_id', $products); ?>
 		<?php echo $form->error($model,'product_id'); ?>
 	</div>
     
 	<div class="form-group row">
-		<?php echo $form->labelEx($model,'course_id'); ?>
-		<?php echo $form->dropDownList($model,'course_id', $courses); ?>
-		<?php echo $form->error($model,'course_id'); ?>
+		<?php echo $form->labelEx($model,'article_id'); ?>
+		<?php echo $form->dropDownList($model,'article_id', $articles); ?>
+		<?php echo $form->error($model,'article_id'); ?>
 	</div>  
     
     <div class="form-group row">

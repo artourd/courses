@@ -11,7 +11,6 @@
 class Course extends CActiveRecord
 {
     public $scope_id = null;
-    public $branch_id = null;  
 	/**
 	 * @return string the associated database table name
 	 */

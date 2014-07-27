@@ -5,6 +5,28 @@ abstract class AdminController extends Controller {
     public $layout='//layouts/column2';
     public $usePhotoProcess = false;
     
+    private $_scripts = array(
+        '/js/jquery-2.1.1.min.js',
+        '/js/bootstrap.min.js',
+        '/js/bootstrap-datetimepicker.min.js',
+        '/js/jquery.ba-bbq.js',
+        '/js/jquery.yiiactiveform.js',
+        '/js/jquery-ui.min.js',
+        '/js/sh/shCore.js',
+        '/js/sh/shBrushXml.js',
+        '/js/sh/shBrushJScript.js',
+        '/js/sh/shBrushPhp.js',
+    );
+    private $_styles = array(
+        '/css/bootstrap.css',
+        '/css/bootstrap-theme.css',
+        '/css/bootstrap-datetimepicker.css',
+        '/css/jquery-ui.min.css',
+        '/css/sh/shCore.css',
+        '/css/sh/shCoreDefault.css',
+        '/css/sh/shThemeDefault.css',
+    );        
+    
     /**
      * @return array action filters
      */
@@ -27,7 +49,7 @@ abstract class AdminController extends Controller {
                 'users' => array('@'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'getProducts', 'getBranches', 'getCourses'),
+                'actions' => array('create', 'update', 'getProducts', 'getArticles'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -41,32 +63,54 @@ abstract class AdminController extends Controller {
     }
 
     public function init() {
-        $baseUrl = Yii::app()->baseUrl;
-		$pos = CClientScript::POS_END;
-        
-		$cs = Yii::app()->clientScript;
-        $cs->registerScript("baseVars", "var _baseUrl = '".Yii::app()->baseUrl."'; "
-                . " var _model = '".$this->modelName."'; ", $pos);
-        
-		$cs->registerScriptFile($baseUrl . '/js/jquery-2.1.1.min.js', $pos);
-		$cs->registerScriptFile($baseUrl . '/js/bootstrap.min.js', $pos);
-        $cs->registerScriptFile($baseUrl . '/js/bootstrap-datetimepicker.min.js', $pos);
-        $cs->registerScriptFile($baseUrl . '/js/tinymce/tinymce.min.js', $pos);
-        //$cs->registerScriptFile($baseUrl . '/js/ckeditor/ckeditor.js', $pos);
-        //$cs->registerScriptFile($baseUrl . '/js/ckeditor/adapter-jquery.js', $pos);
-        $cs->registerScriptFile($baseUrl . '/js/jquery.ba-bbq.js', $pos);
-        
-        $cs->registerScriptFile($baseUrl . '/js/admin.js', $pos);
-        
-        $cs->registerCssFile($baseUrl . '/css/bootstrap.css');
-        $cs->registerCssFile($baseUrl . '/css/bootstrap-theme.css');
-        $cs->registerCssFile($baseUrl . '/css/bootstrap-datetimepicker.css');
-		$cs->registerCssFile($baseUrl . '/css/admin.css');
+        $this->registerScripts();
+        $this->registerStyles();
         
         parent::init();
     }
+    
+    private function registerScripts(){
+        $baseUrl = Yii::app()->baseUrl;
+        $cs = Yii::app()->clientScript;
+        $pos = CClientScript::POS_END;
+        
+        $cs->registerScript("baseVars", 
+                " var _baseUrl = '".Yii::app()->baseUrl."'; ".
+                " var _model = '".$this->modelName."'; ", $pos);
+        
+        $scripts = $this->_scripts;
+        $scripts[] = '/js/admin.js';
+        if (IS_PROD){
+            $jspath = Combiner::processJs($scripts);
+            $cs->registerScriptFile($jspath, $pos);
+        } else {     
+            foreach ($scripts as $value) {
+                $cs->registerScriptFile($baseUrl . $value, $pos);
+            }
+        }
+        if ($this->modelName == 'Article'){
+            $cs->registerScriptFile($baseUrl . '/js/tinymce/tinymce.min.js', $pos);
+        }
+    }
+    
+    private function registerStyles(){
+        $baseUrl = Yii::app()->baseUrl;
+        $cs = Yii::app()->clientScript;
+        
+        $styles = $this->_styles;
+        $styles[] = '/css/admin.css';
+        
+        if (IS_PROD){
+            $csspath = Combiner::processCss($styles);
+            $cs->registerCssFile($csspath);            
+        } else {
+            foreach ($styles as $value) {
+                $cs->registerCssFile($baseUrl.$value);
+            }
+        }
+    }
 
-        /**
+    /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
@@ -86,7 +130,7 @@ abstract class AdminController extends Controller {
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
         if (isset($_POST[$this->modelName])) {
-            $model->attributes = $_POST[$this->modelName];
+            $model->attributes = $this->processData($_POST[$this->modelName]);
 
             if ($model->save()){
 
@@ -96,7 +140,9 @@ abstract class AdminController extends Controller {
 
                     Picture::moveUploadedImages($model->id, $this->modelName);
                 }
-                $this->redirect(array('view', 'id' => $model->id));
+                if ($this->updateRelData($model)){
+                    $this->redirect(array('view', 'id' => $model->id));
+                }
             }
         }
         
@@ -108,7 +154,15 @@ abstract class AdminController extends Controller {
         return array();
     }
 
-    /**
+    protected function updateRelData($model){
+        return true;
+    }
+    
+    protected function processData($data){
+        return $data;
+    }
+
+        /**
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
@@ -127,14 +181,16 @@ abstract class AdminController extends Controller {
                 $_POST[$this->modelName]['ico'] = $model->ico;
             }
             
-            $model->attributes = $_POST[$this->modelName];
+            $model->attributes = $this->processData($_POST[$this->modelName]);
 
             if ($this->usePhotoProcess){
                 Picture::processImages($model);
             }
          
             if ($model->save()){
-                $this->redirect(array('view', 'id' => $model->id));
+                if ($this->updateRelData($model)){
+                    $this->redirect(array('view', 'id' => $model->id));
+                }
             }
         }
 
@@ -237,31 +293,13 @@ abstract class AdminController extends Controller {
         return ($data["active"] ? "<b>+</b>" : "");
     }
     
-    function actionGetBranches(){
+    function actionGetProducts(){
         $scope_id = Yii::app()->request->getParam('scope_id');
         
         $crit = null;
         if ($scope_id){
             $crit = new CDbCriteria();
             $crit->condition = 'scope_id = "'.$scope_id.'"';
-        }
-        $objects = Branch::model()->findAll( $crit );
-
-        $items = array();
-        foreach ($objects as $obj){
-            $items[$obj->id] = $obj->title;
-        }
-        
-        echo CJSON::encode($items);
-    }   
-    
-    function actionGetProducts(){
-        $branch_id = Yii::app()->request->getParam('branch_id');
-        
-        $crit = null;
-        if ($branch_id){
-            $crit = new CDbCriteria();
-            $crit->condition = 'branch_id = "'.$branch_id.'"';
         }
         $objects = Product::model()->findAll( $crit );
 
@@ -273,7 +311,7 @@ abstract class AdminController extends Controller {
         echo CJSON::encode($items);
     }
     
-    function actionGetCourses(){
+    function actionGetArticles(){
         $product_id = Yii::app()->request->getParam('product_id');
         
         $crit = null;
@@ -281,7 +319,7 @@ abstract class AdminController extends Controller {
             $crit = new CDbCriteria();
             $crit->condition = 'product_id = "'.$product_id.'"';
         }
-        $objects = Course::model()->findAll( $crit );
+        $objects = Article::model()->findAll( $crit );
 
         $items = array();
         foreach ($objects as $obj){

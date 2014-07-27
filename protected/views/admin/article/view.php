@@ -30,7 +30,5 @@ $this->menu=array(
 		'updated',
 		'published',
 		'author_id',
-		'meta_desc',
-		'meta_keys',
 	),
 )); ?>

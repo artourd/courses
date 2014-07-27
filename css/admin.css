@@ -241,3 +241,9 @@ div.search-form
 .none {
     display: none;
 }
+
+pre {
+    background-color: #e8f6f8;
+    border: 1px solid #d3dbea;
+    color: #333333;
+}

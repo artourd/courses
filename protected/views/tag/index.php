@@ -1,8 +1,8 @@
 <?php
-/* @var $this BranchController */
+/* @var $this TagController */
 
 $this->breadcrumbs=array(
-	'Branch',
+	'Tag',
 );
 ?>
 <h1><?php echo $this->id . '/' . $this->action->id; ?></h1>

@@ -56,16 +56,6 @@
 		<?php echo $form->textField($model,'author_id',array('size'=>50,'maxlength'=>50)); ?>
 	</div>
 
-	<div class="form-group">
-		<?php echo $form->label($model,'meta_desc'); ?>
-		<?php echo $form->textField($model,'meta_desc',array('size'=>60,'maxlength'=>100)); ?>
-	</div>
-
-	<div class="form-group">
-		<?php echo $form->label($model,'meta_keys'); ?>
-		<?php echo $form->textField($model,'meta_keys',array('size'=>60,'maxlength'=>100)); ?>
-	</div>
-
 	<div class="form-group buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>

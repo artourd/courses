@@ -50,8 +50,8 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'title',
         'ord',
         array(
-            'header'=>'Branch',
-            'name'=>'branch.title',
+            'header'=>'Scope',
+            'name'=>'scope.title',
         ),
         array(
             'name' => 'created',

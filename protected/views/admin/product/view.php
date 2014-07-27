@@ -25,8 +25,8 @@ $this->menu=array(
 		'alias',
 		'title',
         array(
-            'label'=>'Branch',
-            'name'=>'branch.title',
+            'label'=>'Scope',
+            'name'=>'scope.title',
         ),
 		'created',
 		'updated',

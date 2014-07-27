@@ -18,4 +18,4 @@ $this->menu=array(
 
 <h1>Update Video <?php echo $model->id; ?></h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model, 'courses' => $courses, 'scopes' => $scopes, 'branches' => $branches, 'products' => $products)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model, 'articles' => $articles, 'scopes' => $scopes, 'products' => $products)); ?>

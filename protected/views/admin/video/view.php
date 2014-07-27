@@ -23,8 +23,8 @@ $this->menu=array(
 	'attributes'=>array(
 		'id',
         array(
-            'label'=>'Course',
-            'name'=>'course.title',
+            'label'=>'article',
+            'name'=>'article.title',
         ),
 		'link',
 		'alias',

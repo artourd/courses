@@ -39,15 +39,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('author_id')); ?>:</b>
-	<?php echo CHtml::encode($data->author); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('meta_desc')); ?>:</b>
-	<?php echo CHtml::encode($data->meta_desc); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('meta_keys')); ?>:</b>
-	<?php echo CHtml::encode($data->meta_keys); ?>
+	<?php echo CHtml::encode($data->author_id); ?>
 	<br />
 
 </div>
