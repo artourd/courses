@@ -110,15 +110,23 @@ class Seo extends CActiveRecord
         
         return parent::beforeSave();
     }    
-    
-    public static function process($link){
-        $link = Yii::app()->request->requestUri;
-        $linkArr = explode('/', $link);
-        
-        
+
+    public static function meta(){
+        return self::metaByLink(Yii::app()->request->requestUri);
     }
-    
-    public static function findRule($rule){
-        return Seo::model()->findByAttributes(array('rule' => $rule));
+
+    public static function metaByLink($link = null){        
+        $meta = Seo::model()->findByAttributes(array('rule' => $link));
+        if (!$meta){
+            $linkArr = explode('/', $link);
+            if (count($linkArr)>1){
+                unset($linkArr[count($linkArr)-1]);
+                return self::metaByLink(implode('/', $linkArr));
+            } else {
+                return null;
+            }
+        } else {
+            return $meta;
+        }
     }
 }

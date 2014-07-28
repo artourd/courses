@@ -63,7 +63,8 @@ $(document).ready(function(){
 		todayHighlight: 1,
 		startView: 2,
 		forceParse: 0,
-        showMeridian: 1
+        showMeridian: 1,
+        format: 'yyyy-mm-dd hh:ii:ss',
     });    
     
     $('#Video_picture').on('change', function(){
@@ -176,6 +177,7 @@ function addTagData(newTag){
     tags.push(newTag);
     var tagStr = tags.join(';');
     $('#tags .tag_data').val(tagStr);
+    $('#tags .tag_dirty').val(1);
 }
 
 function delTagData(delTag){
@@ -185,7 +187,8 @@ function delTagData(delTag){
         tags.splice(pos, 1);
     }
     var tagStr = tags.join(';');
-    $('#tags .tag_data').val(tagStr);    
+    $('#tags .tag_data').val(tagStr);   
+    $('#tags .tag_dirty').val(1);
 }
 // end TAGS
 

@@ -49,6 +49,8 @@ return array(
                 'admin'=>'admin/index',
                 'admin/<action:\w+>'=>'admin/<action>',
                 'site/<action:\w+>'=>'site/<action>',
+                '<product>' => 'product/index/<product>',
+                '<product:\w+>/<alias:\w+>' => 'article/index',
 			),
 		),
 		

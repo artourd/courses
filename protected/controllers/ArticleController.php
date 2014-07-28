@@ -2,8 +2,14 @@
 
 class ArticleController extends Controller
 {
-	public function actionIndex()
+	public function actionIndex($product, $alias)
 	{
+        print_r($product);
+        echo "<br>";
+        print_r($alias);
+        echo "<br><br>";
+        $seo = Seo::meta();
+        print_r($seo);
 		$this->render('index');
 	}
 
