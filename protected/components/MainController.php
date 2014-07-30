@@ -1,7 +1,7 @@
 <?php
 
 abstract class MainController extends Controller {
-        
+    public $layout='//layouts/main_layout';    
 	/**
 	 * This is the action to handle external exceptions.
 	 */
@@ -115,8 +115,9 @@ abstract class MainController extends Controller {
         $cs = Yii::app()->clientScript;
         
         $styles = array(
-            '/css/bootstrap.css',
-            '/css/bootstrap-dos.css',
+            '/css/menu.css',
+            '/css/menu_products.css',
+            '/css/list.css',
         );
         if (IS_PROD){
             $styles[] = '/css/main.css';

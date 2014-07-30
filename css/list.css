@@ -1,0 +1,275 @@
+.landing-page-rotator {
+    font-size: 2.125em;
+    margin: 1.2em 10px;
+    text-align: center;
+}
+@media only screen and (min-width: 768px) {
+.landing-page-rotator {
+    margin: 0.25em 10px 1.2em;
+}
+}
+@media only screen and (min-width: 1025px) {
+.landing-page-rotator {
+    color: #3a3a3a;
+    font-size: 2.375em;
+    font-weight: 400;
+    margin: 0.2em 10px 1.7em;
+}
+}
+.landing-page-rotator-container {
+    top: 15px;
+}
+@media only screen and (min-width: 1025px) {
+.landing-page-rotator-container {
+    border-bottom: 2px solid #3a3a3a;
+    display: inline-block;
+    height: 52px;
+    overflow: hidden;
+    position: relative;
+    width: 374px;
+}
+}
+.landing-page-rotator-container strong {
+    display: none;
+}
+.landing-page-rotator-container strong:first-child {
+    display: inline-block;
+}
+@media only screen and (min-width: 1025px) {
+.landing-page-rotator-container strong {
+    display: inline-block;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    transition: opacity 0s ease 0s, all 1000ms ease 0s;
+    width: 100%;
+}
+.landing-page-rotator-container strong.visible {
+    opacity: 1;
+}
+.landing-page-rotator-container strong:first-child {
+    letter-spacing: -0.06em;
+}
+.landing-page-rotator-container strong:nth-child(2) {
+    letter-spacing: -0.06em;
+}
+}
+
+//articles
+
+.article-list_item .adspot {
+    background-color: #e9e9e9;
+    margin: 1.875em auto;
+    max-width: 320px;
+    width: 100% !important;
+}
+@media only screen and (min-width: 768px) {
+.article-list_item .adspot {
+    margin: 0;
+    width: auto !important;
+}
+}
+
+.article-list {
+    clear: both;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+.article-list:before, .article-list:after {
+    content: " ";
+    display: table;
+}
+.article-list:after {
+    clear: both;
+}
+@media only screen and (min-width: 768px) {
+.article-list {
+    margin: 0 auto;
+    width: 640px;
+}
+}
+@media only screen and (min-width: 960px) {
+.article-list {
+    width: 960px;
+}
+}
+@media only screen and (min-width: 1295px) {
+.article-list {
+    width: 100%;
+}
+}
+@media only screen and (min-width: 768px) {
+.article-list.article-list--related {
+    margin-left: -10px;
+    margin-right: -11px;
+    width: auto;
+}
+}
+@media only screen and (min-width: 1025px) {
+.article-list.article-list--related {
+    width: auto;
+}
+}
+.article-list_item {
+    border-bottom: 1px solid #e9e9e9;
+    padding: 0 0.625em;
+    width: 100%;
+}
+.article-list_item:first-of-type {
+    border-top: 1px solid #e9e9e9;
+}
+@media only screen and (min-width: 768px) {
+.article-list_item {
+    border: medium none;
+    float: left;
+    height: 250px;
+    margin-bottom: 1.25em;
+    width: 320px;
+}
+.article-list_item:first-of-type {
+    border: medium none;
+}
+.article-list_item.article-list_item--featured {
+    width: 640px;
+}
+}
+.article-list--related .article-list_item {
+    padding: 0;
+}
+@media only screen and (min-width: 768px) {
+.article-list--related .article-list_item {
+    height: 220px;
+    padding: 0 0.625em;
+    width: 267px;
+}
+}
+
+.article-list_item--featured .promo-panel .widget {
+    border-width: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+.article-list_item--featured .promo-panel .widget .promo-panel_media-object {
+    max-height: 100px;
+}
+.article-list_item--featured .promo-panel .widget .promo-panel_media-object img {
+    max-height: 100%;
+}
+@media only screen and (min-width: 768px) {
+.article-list_item--featured .promo-panel {
+    height: 250px;
+}
+.article-list_item--featured .promo-panel .widget {
+    border-width: 1px;
+    height: 100%;
+    overflow-y: auto;
+    position: relative;
+}
+.article-list_item--featured .promo-panel .widget .promo-panel_media-object {
+    float: left;
+    height: 100%;
+    margin-bottom: 0;
+    margin-left: 20px;
+    margin-right: 25px;
+    max-height: none;
+    width: 129px;
+}
+.article-list_item--featured .promo-panel .widget .promo-panel_media-object img {
+    max-height: 200px;
+}
+.article-list_item--featured .promo-panel .widget .promo-panel_content {
+    margin-right: 20px;
+}
+.article-list_item--featured .promo-panel .widget .promo-panel_content .promo-panel_action {
+    clear: none;
+    float: left;
+    width: 69%;
+}
+.article-list_item--featured .promo-panel .widget .promo-panel_content .promo-panel_action .promo-panel_email {
+    display: block;
+    float: left;
+    margin-bottom: 0;
+    width: 60%;
+}
+.article-list_item--featured .promo-panel .widget .promo-panel_content .promo-panel_action .promo-panel_email ~ .button {
+    margin-left: 5px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0.8em;
+    width: 30%;
+}
+}
+
+.article--micro, .article--search {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #e9e9e9;
+    border-radius: 2px;
+    height: 100%;
+}
+
+.article_category_title {
+    border-bottom: 2px solid #1c94c6;
+    color: #1c94c6;
+    font-size: 1em;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    padding: 10px 20px;
+}
+
+.category-mobile.article .article_category_title {
+    border-color: #083a5b;
+}
+
+
+//pagination
+
+.pagination {
+    float: right;
+    margin: 0 0 1.25em;
+}
+.pagination span.current {
+    background: none repeat scroll 0 0 #1c94c6;
+    color: #fff;
+    display: block;
+    font-weight: 700;
+    padding: 0.0625em 0.4375em;
+}
+.pagination-type2 {
+    margin-top: 1em;
+    text-align: center;
+}
+.pagination-type2 .button {
+    border: 1px solid #d2d2d2;
+    display: none;
+    margin-right: 10px;
+    padding: 0.6em 0.8em;
+}
+.pagination-type2 .button.btn-prev, .pagination-type2 .button.btn-active, .pagination-type2 .button.btn-next {
+    display: inline-block;
+}
+.pagination-type2 .button.btn-prev, .pagination-type2 .button.btn-next {
+    padding-left: 2em;
+    padding-right: 2em;
+}
+.pagination-type2 .button.btn-active {
+    background-color: #949494;
+    border-color: #949494;
+    color: #fff;
+    cursor: default;
+}
+.pagination-type2 .button:last-child {
+    margin-right: 0;
+}
+@media only screen and (min-width: 768px) {
+.pagination-type2 .button {
+    display: inline-block;
+}
+.pagination-type2 .button.btn-prev, .pagination-type2 .button.btn-next {
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+}
+}

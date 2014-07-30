@@ -2,7 +2,7 @@
 
 abstract class AdminController extends Controller {
     public $modelName = 'admin';
-    public $layout='//layouts/column2';
+    public $layout='//layouts/admin_layout';
     public $usePhotoProcess = false;
     
     private $_scripts = array(

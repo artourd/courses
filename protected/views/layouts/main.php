@@ -10,13 +10,12 @@
 <body>
 
 <div class="container" id="page">
-
+<?php  $this->renderPartial('//layouts/_header'); ?>
 	<?php echo $content; ?>
 
 	<div class="clear"></div>
 
-	<div id="footer">
-	</div><!-- footer -->
+<?php $this->renderPartial('//layouts/_footer'); ?>
 
 </div><!-- page -->
 

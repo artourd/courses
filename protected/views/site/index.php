@@ -1,13 +1,18 @@
-<div class="container">
-    <div class="hero-unit">
-        <h1>Hello, user!</h1>
-        <p>This is a temporary page for future project. It will be possible to find many articles and trainings. The project will start very soon.</p>
-        <p><a class="btn btn-primary btn-large" href="#">Ok</a></p>
-    </div>
-<hr>
-    <footer>
-        <p>&copy; my-tutorial.org &ast; 2014</p>
-    </footer>
+<?php $this->renderPartial('_products'); ?>
+<main role="main" class="page page--primary">
 
-</div> 
+    <h1 class="landing-page-rotator">
+        Learn to create
+        <span class="landing-page-rotator-container">
+            <strong class="visible">inspirational designs</strong>
+            <strong>scalable applications</strong>
+            <strong>profitable web sites</strong>
+            <strong>brilliant mobile apps</strong>
+            <strong>anything you desire</strong>
+        </span>
+    </h1>
+
+    <?php $this->renderPartial('//layouts/_list'); ?>
+
+</main>
 
