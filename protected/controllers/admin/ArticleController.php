@@ -18,11 +18,15 @@ class ArticleController extends AdminController
         
         //tags
         $tags = Tag::findByArticle($model->id);
+        
+        //authors
+        $authors = User::getAllAuthors();
   
         return array(
             'scopes' => $scopes,
             'products' => $products,
             'tags' => $tags,
+            'authors' => $authors,
         );
     }    
     

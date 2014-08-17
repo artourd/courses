@@ -1,35 +1,36 @@
-.home-header {
+.product_header {
     background: none repeat scroll 0 0 #f3f3f3;
     overflow: hidden;
 }
 @media only screen and (min-width: 768px) {
-.channel-nav {
-    position: relative;
+    .product_nav {
+        position: relative;
+    }
 }
-}
-.channel-nav_list {
+.product_list {
     margin: 0;
 }
 @media only screen and (min-width: 768px) {
-.channel-nav_list {
-    overflow: hidden;
+    .product_list {
+        overflow: hidden;
+    }
 }
-}
-.channel-nav_list-item {
+.product {
     float: left;
     list-style: none outside none;
     width: 25%;
 }
+
 @media only screen and (min-width: 768px) {
-.channel-nav_list-item {
-    float: left;
-    padding-left: 0;
-    padding-right: 0;
-    position: relative;
-    width: 12.5%;
+    .product {
+        float: left;
+        padding-left: 0;
+        padding-right: 0;
+        position: relative;
+        width: 12.5%;
+    }
 }
-}
-.channel-nav_link {
+.product-link {
     box-shadow: -4px 4px 0 rgba(0, 0, 0, 0.1) inset;
     color: #fff;
     display: block;
@@ -40,81 +41,81 @@
     text-indent: 0.5em;
     transition: background 0s ease 0s, all 200ms ease 0s;
 }
-.channel-nav_link:hover, .channel-nav_link:focus, .channel-nav_link.active {
+.product-link:hover, .product-link:focus, .product-link.active {
     color: #fff;
 }
 @media only screen and (min-width: 768px) {
-.channel-nav_link {
-    box-shadow: -6px 6px 0 rgba(0, 0, 0, 0.1) inset;
-    color: #fff;
-    font-size: 1.375em;
-    height: 200px;
-    padding-top: 6.2em;
-    position: relative;
-    text-align: center;
-    text-indent: 0;
-    width: 100%;
-    z-index: 10;
-}
+    .product-link {
+        box-shadow: -6px 6px 0 rgba(0, 0, 0, 0.1) inset;
+        color: #fff;
+        font-size: 1.375em;
+        height: 200px;
+        padding-top: 6.2em;
+        position: relative;
+        text-align: center;
+        text-indent: 0;
+        width: 100%;
+        z-index: 10;
+    }
 }
 @media only screen and (min-width: 1025px) {
-.channel-nav_link {
-    font-size: 1.5em;
-    padding-top: 5.6em;
-}
+    .product-link {
+        font-size: 1.5em;
+        padding-top: 5.6em;
+    }
 }
 @media only screen and (min-width: 1295px) {
-.channel-nav_link {
-    box-shadow: -7px 7px 0 rgba(0, 0, 0, 0.1) inset;
-    font-size: 1.625em;
-    padding-top: 5.1em;
+    .product-link {
+        box-shadow: -7px 7px 0 rgba(0, 0, 0, 0.1) inset;
+        font-size: 1.625em;
+        padding-top: 5.1em;
+    }
 }
-}
-.channel-nav_list-item--category-html .channel-nav_link {
+.product.html .product-link {
     background: none repeat scroll 0 0 #fca13f;
 }
-.channel-nav_list-item--category-html .channel-nav_link:hover, .channel-nav_list-item--category-html .channel-nav_link:focus, .channel-nav_list-item--category-html .channel-nav_link:active {
+.product.html .product-link:hover, .product.html .product-link:focus, .product.html .product-link:active {
     background: none repeat scroll 0 0 #fc9526;
 }
-.channel-nav_list-item--category-css .channel-nav_link {
+.product.css .product-link {
     background: none repeat scroll 0 0 #248aaf;
 }
-.channel-nav_list-item--category-css .channel-nav_link:hover, .channel-nav_list-item--category-css .channel-nav_link:focus, .channel-nav_list-item--category-css .channel-nav_link:active {
+.product.css .product-link:hover, .product.css .product-link:focus, .product.css .product-link:active {
     background: none repeat scroll 0 0 #20799a;
 }
-.channel-nav_list-item--category-javascript .channel-nav_link {
+.product.javascript .product-link {
     background: none repeat scroll 0 0 #fac552;
 }
-.channel-nav_list-item--category-javascript .channel-nav_link:hover, .channel-nav_list-item--category-javascript .channel-nav_link:focus, .channel-nav_list-item--category-javascript .channel-nav_link:active {
+.product.javascript .product-link:hover, .product.javascript .product-link:focus, .product.javascript .product-link:active {
     background: none repeat scroll 0 0 #f9bd39;
 }
-.channel-nav_list-item--category-php .channel-nav_link {
+.product.php .product-link {
     background: none repeat scroll 0 0 #669;
 }
-.channel-nav_list-item--category-php .channel-nav_link:hover, .channel-nav_list-item--category-php .channel-nav_link:focus, .channel-nav_list-item--category-php .channel-nav_link:active {
+.product.php .product-link:hover, .product.php .product-link:focus, .product.php .product-link:active {
     background: none repeat scroll 0 0 #5c5c8a;
 }
-.channel-nav_list-item--category-ruby .channel-nav_link {
-    background: none repeat scroll 0 0 #eb5745;
-}
-.channel-nav_list-item--category-ruby .channel-nav_link:hover, .channel-nav_list-item--category-ruby .channel-nav_link:focus, .channel-nav_list-item--category-ruby .channel-nav_link:active {
-    background: none repeat scroll 0 0 #e9422e;
-}
-.channel-nav_list-item--category-mobile .channel-nav_link {
-    background: none repeat scroll 0 0 #083a5b;
-}
-.channel-nav_list-item--category-mobile .channel-nav_link:hover, .channel-nav_list-item--category-mobile .channel-nav_link:focus, .channel-nav_list-item--category-mobile .channel-nav_link:active {
-    background: none repeat scroll 0 0 #062b44;
-}
-.channel-nav_list-item--category-ux .channel-nav_link {
+.product.ux .product-link {
     background: none repeat scroll 0 0 #3cbc8d;
 }
-.channel-nav_list-item--category-ux .channel-nav_link:hover, .channel-nav_list-item--category-ux .channel-nav_link:focus, .channel-nav_list-item--category-ux .channel-nav_link:active {
+.product.ux .product-link:hover, .product.ux .product-link:focus, .product.ux .product-link:active {
     background: none repeat scroll 0 0 #36a97f;
 }
-.channel-nav_list-item--category-design .channel-nav_link {
+.product.design .product-link {
     background: none repeat scroll 0 0 #3dbfd9;
-}channel-nav
-.channel-nav_list-item--category-design .channel-nav_link:hover, .channel-nav_list-item--category-design .channel-nav_link:focus, .channel-nav_list-item--category-design .channel-nav_link:active {
+}
+.product.design .product-link:hover, .product.design .product-link:focus, .product.design .product-link:active {
     background: none repeat scroll 0 0 #29b7d3;
+}
+.product.mobile .product-link {
+    background: none repeat scroll 0 0 #083a5b;
+}
+.product.mobile .product-link:hover, .product.mobile .product-link:focus, .product.mobile .product-link:active {
+    background: none repeat scroll 0 0 #062b44;
+}
+.product.threede .product-link {
+    background: none repeat scroll 0 0 #eb5745;
+}
+.product.threede .product-link:hover, .product.threede .product-link:focus, .product.threede .product-link:active {
+    background: none repeat scroll 0 0 #e9422e;
 }

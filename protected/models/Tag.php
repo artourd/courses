@@ -106,6 +106,34 @@ class Tag extends CActiveRecord
         return self::model()->findAll($cond);
     }
     
+   /* public static function findRelations($ids = array(0)){
+        //get relations
+        $command = Yii::app()->db
+            ->createCommand('SELECT article_id, tag_id FROM article_tags WHERE article_id IN (:article_id)')
+            ->bindParam(':article_id', implode(',', $ids));
+        
+        $rels = $command->queryAll();
+        
+        //extract ids
+        $tagIds = $articleIds = array();
+        foreach($rels as $rel){
+            $tagIds[] = $rel['tag_id'];
+            $articleIds[] = $rel['article_id'];
+        }
+        array_unique($tagIds); array_unique($articleIds);
+        
+        //get needed tags
+        $cond = new CDbCriteria();
+        $cond->addInCondition('id', $tagIds);
+        $tags = self::model()->findAll($cond);
+        
+        
+        
+        //relate with article_ids
+        
+        
+    }*/
+
     public static function get($tagName){
         $tagAlias = Helper::transliterate($tagName);        
         $tag = Tag::model()->findByAttributes(array('alias' => $tagAlias));

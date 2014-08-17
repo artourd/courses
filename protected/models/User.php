@@ -106,5 +106,9 @@ class User extends CActiveRecord
         $this->updated = date('Y-m-d H:i:s');
         
         return parent::beforeSave();
-    }      
+    }     
+    
+    public static function getAllAuthors(){
+        
+    }
 }

@@ -115,6 +115,7 @@ abstract class MainController extends Controller {
         $cs = Yii::app()->clientScript;
         
         $styles = array(
+            '/css/base.css',
             '/css/menu.css',
             '/css/menu_products.css',
             '/css/list.css',
@@ -122,11 +123,11 @@ abstract class MainController extends Controller {
         if (IS_PROD){
             $styles[] = '/css/main.css';
         }
-        /*foreach ($styles as $value) {
+        foreach ($styles as $value) {
             $cs->registerCssFile($baseUrl.$value);
-        }*/
-        $csspath = Combiner::processCss($styles);
-        $cs->registerCssFile($csspath);
+        }
+        //$csspath = Combiner::processCss($styles);
+        //$cs->registerCssFile($csspath);
         
         if (!IS_PROD){
             $cs->registerCssFile($baseUrl.'/css/main.css');

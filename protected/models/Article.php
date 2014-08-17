@@ -19,8 +19,11 @@
 class Article extends CActiveRecord
 {
     public $scope_id = null;
- 
-	/**
+    public $product = null;
+    public $tags = array();
+
+
+    /**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
@@ -41,7 +44,7 @@ class Article extends CActiveRecord
 			array('alias, title, short, author_id', 'length', 'max'=>50),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, alias, product_id, title, short, content, created, updated, published, author_id, order', 'safe', 'on'=>'search'),
+			array('id, alias, product_id, title, short, content, created, updated, published, author_id, order, level, style', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,6 +77,8 @@ class Article extends CActiveRecord
 			'updated' => 'Updated',
 			'published' => 'Published',
 			'author_id' => 'Author',
+            'level' => 'Level',
+            'style' => 'Style',
             'ord' => 'Order',
 		);
 	}
@@ -107,6 +112,7 @@ class Article extends CActiveRecord
 		$criteria->compare('published',$this->published,true);
 		$criteria->compare('author_id',$this->author_id,true);
         $criteria->compare('order',$this->ord,true);
+        $criteria->compare('style',$this->style,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -131,6 +137,8 @@ class Article extends CActiveRecord
         }
         $this->updated = date('Y-m-d H:i:s');
         
+        Yii::app()->cache->delete('article_'.$this->id);
+        
         return parent::beforeSave();
     }    
     
@@ -146,4 +154,44 @@ class Article extends CActiveRecord
         reset($items);        
         return $items;
     }        
+    
+    /**
+     * 
+     * @param type $filters
+     * @param type $tags
+     * @return type
+     */
+    public static function getItems($filters = array(), $tags = array(), $direct = null ){
+        //http://www.yiiframework.com/doc/guide/1.1/ru/database.query-builder
+        $command = Yii::app()->db->createCommand();
+        $command->select('id')
+                ->from('article')
+                ->where('published > 0')
+                ->order('id desc')
+                ->limit(10, 0);
+        
+        $ids = $command->queryColumn();
+        
+        foreach ($ids as $id){
+            $items[$id] = self::getItem($id);
+        }
+        
+        return $items;
+    }
+    
+    public static function getItem($id){
+        $item = false;//Yii::app()->cache->get('article_'.$id);
+        
+        if ($item === false){            
+            $prods = Product::getItems();
+            
+            $item = self::model()->findByPk($id);
+            $item->product = $prods[$item->product_id];
+            $item->tags = Tag::findByArticle($item->id);
+            
+            //Yii::app()->cache->set('article_'.$id, $item, 86400 * 365);
+        }
+                
+        return $item;
+    }
 }

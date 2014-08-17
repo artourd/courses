@@ -128,9 +128,9 @@ class Product extends CActiveRecord
         return parent::beforeSave();
     }    
     
-    public static function getForDropDown($scope_id){
+    public static function getForDropDown($scope_id = null){
         $crit = new CDbCriteria();
-        $crit->condition = 'scope_id = "'.$scope_id.'"';
+        if ($scope_id) $crit->condition = 'scope_id = "'.$scope_id.'"';
         $allModels = Product::model()->findAll( $crit );
    
         $items = array();
@@ -139,5 +139,20 @@ class Product extends CActiveRecord
         }   
         reset($items);        
         return $items;
-    }      
+    }
+    
+    private static $items = array();
+    
+    public static function getItems($scope_id = null){
+        if (!self::$items){        
+            $crit = new CDbCriteria();
+            if ($scope_id) $crit->condition = 'scope_id = "'.$scope_id.'"';
+            $allModels = Product::model()->findAll( $crit );
+
+            foreach ($allModels as $model){
+                self::$items[$model->id] = $model;
+            }
+        }                
+        return self::$items;
+    }
 }

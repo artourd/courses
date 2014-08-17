@@ -1,18 +1,9 @@
-<?php $this->renderPartial('_products'); ?>
-<main role="main" class="page page--primary">
+<?php  $this->renderPartial('_products'); ?>
+<main class="page">
 
-    <h1 class="landing-page-rotator">
-        Learn to create
-        <span class="landing-page-rotator-container">
-            <strong class="visible">inspirational designs</strong>
-            <strong>scalable applications</strong>
-            <strong>profitable web sites</strong>
-            <strong>brilliant mobile apps</strong>
-            <strong>anything you desire</strong>
-        </span>
-    </h1>
+    <h1 class="landing-page-rotator">Learn to create</h1>
 
-    <?php $this->renderPartial('//layouts/_list'); ?>
+    <?php $this->renderPartial('//layouts/_list', array('articles' => $articles)); ?>
 
 </main>
 
